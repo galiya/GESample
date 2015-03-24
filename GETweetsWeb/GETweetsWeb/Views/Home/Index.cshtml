@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section scripts
+{
+    <script type="text/javascript"  src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/d3/d3.js"></script>
+    <link href="~/Content/nv.d3.min.css" rel="stylesheet">
+    <script src="~/Scripts/nv.d3.min.js"></script>
+    
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/livestamp.min.js"></script>
+
+    <style>
+
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        @*<div id="chart">
+            <div>
+                <h3>Voting Sentiment derived from Twitter Conversations</h3>
+            </div>
+
+            <svg></svg>
+            Last refreshed <span id="pageUpdatedOn" data-livestamp=""></span>
+        </div>*@
+        
+        <img src="~/Content/images/uk-map-orange.png" style="width:80%">
+    </div>
+    <div class="col-md-5">
+
+        <!-- Carousel-->
+        <div id="myCarousel" class="carousel slide" data-interval="false">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="container">
+                        <div class="chart-caption">
+                            <h4>Voting Sentiment derived from Twitter Conversations</h4>
+                        </div>
+                        <img class="loaderImage" src="~/Content/images/ajax-loader.gif" display="none"/>
+                        <div id="chart">
+                            <svg></svg>
+                            
+                        </div>
+                        <div class="chart-footer">
+                            Data last updated: <span id="pageUpdatedOn" data-livestamp=""></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="http://lorempixel.com/1500/600/abstract/1">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Changes to the Grid</h1>
+                            <p>Bootstrap 3 still features a 12-column grid, but many of the CSS class names have completely changed.</p>
+                            <p><a class="btn btn-large btn-primary" href="#">Learn more</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="http://placehold.it/1500X500">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Percentage-based sizing</h1>
+                            <p>With "mobile-first" there is now only one percentage-based grid.</p>
+                            <p><a class="btn btn-large btn-primary" href="#">Browse gallery</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </div>
+        <!-- /.carousel -->
+
+    </div>
+</div>
+<div class="row">   
+    <div class="col-md-12">
+        <div class="Explanation">
+            <p>Notes</p>
+        </div>
+        <div class="Marketing">
+            <p>Marketing</p>
+        </div>
+        <div class="Contact">
+            <p>Contact</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    function updateLivestamp(lastUpdated){
+        jQuery('#pageUpdatedOn').livestamp(lastUpdated);
+    }
+
+    $(function () {
+        $('.chart-footer').hide();
+        $('.loaderImage').show();
+        $.ajax({
+            type: "GET",
+            url: "/api/Predictions",
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                $('.chart-footer').show();
+                $('.loaderImage').hide();
+                function chartData() {
+
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+
+                            updateLivestamp(key)
+                            dataValues = data[key];
+                            // work with key and value
+                        }
+                        break;
+                    }
+
+
+                    var vals = [];
+                    for (var i in dataValues) {
+                        vals.push({ label: dataValues[i].shortName, value: dataValues[i].value });
+                    }
+                    return [{
+                        values: vals,
+                        key: "BarChart",
+                        color: ['orange', 'yellow', '#C5E946', '#95b43f', 'red', '#FF2259', '#F6A641']
+                    }];
+                }
+
+
+                nv.addGraph(function () {
+                    generate:
+                    var chart = nv.models.discreteBarChart()
+                      .x(function (d) { return d.label })
+                      .y(function (d) { return d.value })
+                      .showValues(true)
+                      .tooltips(false)
+                      
+                    
+                    chart.valueFormat(d3.format(',.f'))
+                   // chart.xAxis.tickValues(0)
+                    chart.showYAxis(false)
+                   
+
+                    d3.select('#chart svg')
+                      .datum(chartData())
+                      .transition().duration(500)
+                      .call(chart)
+                    ;
+
+                    nv.utils.windowResize(chart.update);
+
+
+                    return chart;
+                });
+            },
+            error: function (response) {
+                $('.loaderImage').hide();
+            }
+        });
+    });
+
+
+</script>
