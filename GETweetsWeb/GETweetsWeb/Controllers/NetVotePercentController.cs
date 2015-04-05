@@ -29,26 +29,27 @@ namespace GETweetsWeb.Controllers
 
             var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);  //TODO: change
 
-            if (tweets.Count == 0)
+            if (tweets.Count() == 0)
             {
-                return null;
+                return new NetVotePercentData() { LastUpdated = DateTime.Now, Data = null };
             }
 
             var data = new List<TweetsByPartyPercent>();
-            var dataGroup = from t in tweets group t by t.party.Name into g select new { party = g.Key, count = g.Count() };
+            var dataGroup = from t in tweets group t by t.PoliticalParty into g orderby g.Key select new { party = g.Key, count = g.Count() };
 
             var sum = (decimal)dataGroup.Select(r => r.count).Sum();
 
             var totalsWithPercentage = dataGroup.Select(r => new {
                 party = r.party,
-                percentage = sum != 0 ? Math.Round((r.count / sum), 2) : 0
+                percentage = sum != 0 ? Math.Round((r.count / sum), 4) : 0
             });
 
 
 
             foreach (var item in totalsWithPercentage)
             {
-                data.Add(new TweetsByPartyPercent() { Name = item.party, Percent = item.percentage });
+                var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.party.ToLower()).FirstOrDefault();
+                data.Add(new TweetsByPartyPercent() { Name = party.Name, Percent = item.percentage });
             }
 
             return new NetVotePercentData() { LastUpdated = DateTime.Now, Data = data };

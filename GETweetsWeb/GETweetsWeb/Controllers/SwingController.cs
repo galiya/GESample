@@ -29,13 +29,13 @@ namespace GETweetsWeb.Controllers
 
             var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);  //TODO: change
 
-            if (tweets.Count == 0)
+            if (tweets.Count() == 0)
             {
                 return null;
             }
 
             var data = new List<TweetsByPartyCount>();
-            var dataGroup = from t in tweets group t by t.party.Name into g select new { party = g.Key, count = g.Count() };
+            var dataGroup = from t in tweets group t by t.PoliticalParty into g select new { party = g.Key, count = g.Count() };
             foreach (var item in dataGroup)
             {
                 data.Add(new TweetsByPartyCount() { Name = item.party, Count = item.count });

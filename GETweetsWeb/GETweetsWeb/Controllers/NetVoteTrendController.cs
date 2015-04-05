@@ -29,20 +29,24 @@ namespace GETweetsWeb.Controllers
 
             var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);
 
-            if (tweets.Count == 0)
+            if (tweets.Count() == 0)
             {
-                return null;
+                return new NetVoteTrendData() { LastUpdated = DateTime.Now, Data = null };
             }
 
-            
+
+            var dataGroup1 = tweets.Select(p => p.TweetDate).Distinct();
+
+            var list = dataGroup1.ToList();
+
+
+            var dataGroup = from t in tweets
+                            group t by new { t.TweetDate, t.PoliticalParty } into g
+                            orderby g.Key.TweetDate, g.Key.PoliticalParty
+                            select new { date = g.Key.TweetDate, party = g.Key.PoliticalParty, count = g.Count() };
+
 
             var dataDict = new Dictionary<string, List<object[]>>();
-
-            var dataGroup = from t in tweets group t by new { t.Timestamp, t.party.Name} into g select new { date = g.Key.Timestamp, party = g.Key.Name, count = g.Sum(v => v.SentimentScore) };
-            dataGroup.OrderBy(p => p.date);
-
-            List<object[]> timeseries = new List<object[]>(); 
-
 
             foreach (var item in dataGroup)
             {
@@ -51,7 +55,6 @@ namespace GETweetsWeb.Controllers
                 values[0] = item.date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
                 values[1] = item.count;
                 
-
                 if (dataDict.ContainsKey(item.party))
                 {
                     dataDict[item.party].Add(values);
@@ -66,7 +69,7 @@ namespace GETweetsWeb.Controllers
 
             foreach (var item in dataDict)
             {
-                var party = PoliticalParty.GetList().Where(p => p.Name.ToLower() == item.Key.ToLower()).FirstOrDefault();
+                var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.Key.ToLower()).FirstOrDefault();
                 data.Add(new TweetsByDates() { Key = party.Name, Values = item.Value, Color = party.Color });
             }
 

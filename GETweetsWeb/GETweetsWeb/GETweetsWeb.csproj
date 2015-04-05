@@ -39,11 +39,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,9 +134,31 @@
     <Compile Include="Controllers\NetVoteController.cs" />
     <Compile Include="Controllers\SwingController.cs" />
     <Compile Include="Controllers\NetVoteTrendController.cs" />
+    <Compile Include="DummyTweet.cs">
+      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeoShape.cs">
+      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="GETweetMLService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NetVotePercentController.cs" />
+    <Compile Include="GETweetWebEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GETweetWebEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GETweetWebEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GETweetWebEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GETweetWebEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="GETweetWebEntitiesContextConnStr.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,14 +173,34 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\Logo.png" />
+    <Content Include="Content\images\pin.png" />
     <Content Include="Content\nv.d3.min.css" />
-    <Content Include="Content\images\uk-map-orange.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="GETweetWebEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GETweetWebEntities.edmx</DependentUpon>
+      <LastGenOutput>GETweetWebEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="GETweetWebEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GETweetWebEntities.edmx</DependentUpon>
+      <LastGenOutput>GETweetWebEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="GETweetWebEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GETweetWebEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="GETweetWebEntities.edmx.diagram">
+      <DependentUpon>GETweetWebEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Content\map.topo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\GETweetsWeb.pubxml" />
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />
@@ -192,6 +243,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

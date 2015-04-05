@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ge15tweetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DummyTweets">
+          <Key>
+            <PropertyRef Name="LocalId" />
+          </Key>
+          <Property Name="LocalId" Type="int" Nullable="false" />
+          <Property Name="TweetDate" Type="date" Nullable="false" />
+          <Property Name="Sentiment" Type="int" Nullable="false" />
+          <Property Name="PoliticalParty" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="GeoShapeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GeoShape">
+          <Key>
+            <PropertyRef Name="GeoShapeId" />
+          </Key>
+          <Property Name="GeoShapeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PolygonId" Type="int" />
+        </EntityType>
+        <Association Name="FK_DummyTweets_GeoShape">
+          <End Role="GeoShape" Type="Self.GeoShape" Multiplicity="1" />
+          <End Role="DummyTweets" Type="Self.DummyTweets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeoShape">
+              <PropertyRef Name="GeoShapeId" />
+            </Principal>
+            <Dependent Role="DummyTweets">
+              <PropertyRef Name="GeoShapeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ge15tweetsModelStoreContainer">
+          <EntitySet Name="DummyTweets" EntityType="Self.DummyTweets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeoShape" EntityType="Self.GeoShape" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DummyTweets_GeoShape" Association="Self.FK_DummyTweets_GeoShape">
+            <End Role="GeoShape" EntitySet="GeoShape" />
+            <End Role="DummyTweets" EntitySet="DummyTweets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ge15tweetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GETweetsWebDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DummyTweets" EntityType="ge15tweetsModel.DummyTweet" />
+          <EntitySet Name="GeoShapes" EntityType="ge15tweetsModel.GeoShape" />
+          <AssociationSet Name="FK_DummyTweets_GeoShape" Association="ge15tweetsModel.FK_DummyTweets_GeoShape">
+            <End Role="GeoShape" EntitySet="GeoShapes" />
+            <End Role="DummyTweet" EntitySet="DummyTweets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DummyTweet">
+          <Key>
+            <PropertyRef Name="LocalId" />
+          </Key>
+          <Property Name="LocalId" Type="Int32" Nullable="false" />
+          <Property Name="TweetDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Sentiment" Type="Int32" Nullable="false" />
+          <Property Name="PoliticalParty" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="GeoShapeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GeoShape" Relationship="ge15tweetsModel.FK_DummyTweets_GeoShape" FromRole="DummyTweet" ToRole="GeoShape" />
+        </EntityType>
+        <EntityType Name="GeoShape">
+          <Key>
+            <PropertyRef Name="GeoShapeId" />
+          </Key>
+          <Property Name="GeoShapeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PolygonId" Type="Int32" />
+          <NavigationProperty Name="DummyTweets" Relationship="ge15tweetsModel.FK_DummyTweets_GeoShape" FromRole="GeoShape" ToRole="DummyTweet" />
+        </EntityType>
+        <Association Name="FK_DummyTweets_GeoShape">
+          <End Type="ge15tweetsModel.GeoShape" Role="GeoShape" Multiplicity="1" />
+          <End Type="ge15tweetsModel.DummyTweet" Role="DummyTweet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeoShape">
+              <PropertyRef Name="GeoShapeId" />
+            </Principal>
+            <Dependent Role="DummyTweet">
+              <PropertyRef Name="GeoShapeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ge15tweetsModelStoreContainer" CdmEntityContainer="GETweetsWebDB">
+          <EntitySetMapping Name="DummyTweets">
+            <EntityTypeMapping TypeName="ge15tweetsModel.DummyTweet">
+              <MappingFragment StoreEntitySet="DummyTweets">
+                <ScalarProperty Name="GeoShapeId" ColumnName="GeoShapeId" />
+                <ScalarProperty Name="PoliticalParty" ColumnName="PoliticalParty" />
+                <ScalarProperty Name="Sentiment" ColumnName="Sentiment" />
+                <ScalarProperty Name="TweetDate" ColumnName="TweetDate" />
+                <ScalarProperty Name="LocalId" ColumnName="LocalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeoShapes">
+            <EntityTypeMapping TypeName="ge15tweetsModel.GeoShape">
+              <MappingFragment StoreEntitySet="GeoShape">
+                <ScalarProperty Name="PolygonId" ColumnName="PolygonId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GeoShapeId" ColumnName="GeoShapeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

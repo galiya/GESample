@@ -40,10 +40,17 @@ textarea {
   right: 15%;
   left: 15%;
   z-index: 10;
-  padding-top: 20px;
+  /*padding-top: 20px;*/
   color: black;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.chart-caption h4 {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    
 }
 
 .chart-footer {
@@ -56,8 +63,66 @@ textarea {
 .loaderImage {
   position: absolute; 
   left: 50%; 
-  top: 50%; 
+  top: 60%; 
   margin: -8px 0 0 8px;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+  }
+
+#map{
+    height: 500px;
+    width: 450px;
+    border: solid 1px black;
+}
+
+/*Required to resolve a conflict between nvd3 and Leaflet css files*/
+.leaflet-overlay-pane svg {
+    width: auto;
+    height: auto;
+}
+
+.areaname{
+    /*position: absolute;
+    top:2em;
+    right:1em;*/
+    z-index:6;
+    display:none;
+
+    border: solid 1px #CDCDCD;
+    border-radius: 3px;
+    background: #292929;
+    color: white;
+    font-family: sans-serif, Verdana;
+    font-size: smaller;
+    padding: 3px;
+  }
+
+.info {
+    position: center;
+    
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    width: 180px;
+    text-align: center;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.info span {
+    font-size:smaller;
 }
 
 /*CUSTOMISE THE D3 CHART*/
@@ -67,24 +132,49 @@ textarea {
   stroke-opacity: 0;
 }
 
-  .nvtooltip { position: absolute;
+.trend .nvd3 .nv-axis.nv-x {
+  stroke-opacity: 1;
+}
+
+.nvd3.nv-noData {
+    font-size:larger !important;
+    font-weight: 200 !important;
+}
+
+  /*.nvtooltip { position: absolute;
 background-color: rgba(255,255,255,1.0);
 padding: 1px;
-margin: -50px;}
+margin: -50px;}*/
+
+  /*.nvd3 line.nv-guideline { //* Hide the guideline 
+            display: none;
+            stroke-width: 0.0;
+        }*/
+        .nvd3 .nv-bars rect { /* fix the hover guideline to be snappy */
+            transition: fill-opacity 0ms linear;
+            -moz-transition: fill-opacity 0ms linear;
+            -webkit-transition: fill-opacity 0ms linear;
+        }
+        .nvd3 .nv-x .nv-axis .x-axis-tick-mark {
+            stroke: #000; /* black tick marks */
+        }
+        .nvd3 .nv-y .nv-axis .tick.zero line {
+            stroke: #000; /* black line for the x axis */
+        }
 
 /* CUSTOMISE THE CAROUSEL
 -------------------------------------------------- */
 
 /* Carousel base class */
-.carousel {
+/*.carousel {
   margin-bottom: 50px;
   margin-top:50px;
-}
+}*/
 
 .carousel-inner{
   width:100%;
   min-height: 550px !important;
-  border: solid 1px black;
+
 }
 
 .carousel-control.left, .carousel-control.right{ 
@@ -95,6 +185,7 @@ margin: -50px;}
 .carousel-control.left {
     /*margin-left: -45px; 
     margin-top:-15px;*/ 
+    
     color: black;
 }
 .carousel-control.right {
@@ -103,5 +194,9 @@ margin: -50px;}
     color: black;
 }
 
+.carousel-control .icon-prev, .carousel-control .icon-next {
+    top: 5%;
+
+}
 
 

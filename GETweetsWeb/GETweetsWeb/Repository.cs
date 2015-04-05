@@ -2,77 +2,102 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
+using GETweetsWeb;
 using GETweetsWeb.Models;
 
 namespace GETweetsWeb
 {
     public sealed class Repository : IDisposable
     {
-        //private GETweetWebEntities db = new GETweetWebEntities();
+        private GETweetsWebDB db = new GETweetsWebDB();
 
-        //public GETweetWebEntities Context
-        //{
-        //    get { return this.db; }
-        //}
+        public static string GetConnectionString()
+        {
+
+            string connectionString = new System.Data.EntityClient.EntityConnectionStringBuilder
+            {
+                Metadata = "res://*",
+                Provider = "System.Data.SqlClient",
+                ProviderConnectionString = new System.Data.SqlClient.SqlConnectionStringBuilder
+                {
+                    InitialCatalog = System.Configuration.ConfigurationManager.AppSettings["DBName"],
+                    DataSource = System.Configuration.ConfigurationManager.AppSettings["DBDataSource"],
+                    IntegratedSecurity = false,
+                    UserID = System.Configuration.ConfigurationManager.AppSettings["DBUserId"],                 // User ID such as "sa"
+                    Password = System.Configuration.ConfigurationManager.AppSettings["DBPwd"],               // hide the password
+                }.ConnectionString
+            }.ConnectionString;
+
+            return connectionString;
+        }
+
+
+        public GETweetsWebDB context
+        {
+            get { return this.db; }
+        }
 
         private const string cacheConversationsUK = "Repository:ConversationsUK";
-        public List<Tweet> GetTweets()
+        public IEnumerable<DummyTweet> GetTweets()
         {
-            var tweets = (List<Tweet>)HttpContext.Current.Cache.Get(cacheConversationsUK);
+            var tweets = (List<DummyTweet>)HttpContext.Current.Cache.Get(cacheConversationsUK);
             if (tweets == null)
             {
-
-
-                //using (var db = new GETweetWebEntities())
-                //{
-                //    db.ContextOptions.LazyLoadingEnabled = false;
-                //    tweets = db.TweetsScored.Include("InheritedPermissions")/*.OrderBy(f => f.NameEnglish)*/.ToList();
-                //}
-                tweets = GetDummyTweets();
+                try
+                {
+                    using (var db = new GETweetsWebDB(GetConnectionString()))
+                    {
+                        tweets = db.DummyTweets.Include("GeoShape").ToList<DummyTweet>();
+                    }
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
 
                 HttpContext.Current.Cache.Insert(cacheConversationsUK, tweets);
             }
             return tweets;
         }
 
-        public List<Tweet> GetTweetsByLocation(int? locationId)
+        public IEnumerable<DummyTweet> GetTweetsByLocation(int? locationId)
         {
-            if (locationId.HasValue)
+            try
             {
-                return this.GetTweets().Where(f => f.Location.Id == locationId).ToList();
+                if (locationId.HasValue && locationId > 0)
+                {
+                    return this.GetTweets().Where(f => f.GeoShape.GeoShapeId == locationId);
+                }
+                else
+                    return this.GetTweets();
             }
-            else
-                return this.GetTweets();
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
 
-        public List<Tweet> GetDummyTweets()
+        public List<GeoShape> GetMapAreasList()
         {
-            var result = new List<Tweet>();
+            List<GeoShape> counties = new List<GeoShape>();
+            counties.Add(new GeoShape() { Name = "Great Britain", PolygonId = 0, GeoShapeId = 0 });
 
-            var parties = PoliticalParty.GetList();
+            try
+            {
+                using (var db = new GETweetsWebDB(GetConnectionString()))
+                {
+                    counties.AddRange(db.GeoShapes.ToList());
+                }
+                return counties;
 
-            var party = parties.Where(p => p.Id == 0).FirstOrDefault();
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-7), twitterUser = "xyz", party = party, Location = new MapLocation(null), SentimentScore = -1 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-7), twitterUser = "abc", party = party, Location = new MapLocation(null), SentimentScore = 2 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-7), twitterUser = "def", party = party, Location = new MapLocation(null), SentimentScore = 0 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-6), twitterUser = "xyz", party = party, Location = new MapLocation(null), SentimentScore = 3 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-5), twitterUser = "xyz", party = party, Location = new MapLocation(null), SentimentScore = -2 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-4), twitterUser = "xyzL", party = party, Location = new MapLocation(null), SentimentScore = 1 });
+            }
+            catch
+            {
+                return counties;
+            }
 
-            party = parties.Where(p => p.Id == 1).FirstOrDefault();
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-7), twitterUser = "xyzL", party = party, Location = new MapLocation(null), SentimentScore = 1 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-6), twitterUser = "xyzL", party = party, Location = new MapLocation(null), SentimentScore = -3 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-5), twitterUser = "xyzL", party = party, Location = new MapLocation(null), SentimentScore = 5 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-4), twitterUser = "xyzL", party = party, Location = new MapLocation(null), SentimentScore = 0 });
-            
-
-            party = parties.Where(p => p.Id == 2).FirstOrDefault();
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-7), twitterUser = "xyzU", party = party, Location = new MapLocation(null), SentimentScore = 5 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-7), twitterUser = "def", party = party, Location = new MapLocation(null), SentimentScore = 0 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-6), twitterUser = "xyzU", party = party, Location = new MapLocation(null), SentimentScore = 0 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-5), twitterUser = "xyzU", party = party, Location = new MapLocation(null), SentimentScore = 1 });
-            result.Add(new Tweet() { Timestamp = System.DateTime.Today.AddDays(-4), twitterUser = "xyzU", party = party, Location = new MapLocation(null), SentimentScore = 3 });
-            return result;
         }
 
         public void Dispose()

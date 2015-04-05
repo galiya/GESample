@@ -29,16 +29,17 @@ namespace GETweetsWeb.Controllers
 
             var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);
 
-            if (tweets.Count == 0)
+            if (tweets.Count() == 0)
             {
-                return null;
+                return new NetVoteData() { LastUpdated = DateTime.Now, Data = null };
             }
 
             var data = new List<TweetsByPartyCount>();
-            var dataGroup = from t in tweets group t by t.party.Name into g select new { party = g.Key, count = g.Count()};
+            var dataGroup = from t in tweets group t by t.PoliticalParty into g orderby g.Key select new { party = g.Key, count = g.Count()};
             foreach (var item in dataGroup)
             {
-                data.Add(new TweetsByPartyCount() {Name = item.party, Count = item.count });
+                var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.party.ToLower()).FirstOrDefault();
+                data.Add(new TweetsByPartyCount() {Name = party.Name, Count = item.count });
             }
 
             return new NetVoteData() { LastUpdated = DateTime.Now, Data = data };

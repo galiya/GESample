@@ -3,32 +3,35 @@
 }
 @section scripts
 {
-    <script type="text/javascript"  src="~/Scripts/jquery-1.10.2.js"></script>
-    <script src="~/Scripts/d3/d3.js"></script>
+    @*<script type="text/javascript"  src="~/Scripts/jquery-1.10.2.js"></script>*@
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+    @*<script src="~/Scripts/d3/d3.js"></script>*@
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <link href="~/Content/nv.d3.min.css" rel="stylesheet">
     <script src="~/Scripts/nv.d3.min.js"></script>
     
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/livestamp.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
 
-    <style>
-
-    </style>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 }
+
 <div class="bs-docs-header" id="content" tabindex="-1">
       <div class="container">
         <h1>General Election 2015  voting preferences on Twitter</h1>
           <p>The General Election 2015 Twitter tracker, highlights the near real-time voting preferences of Great Britain’s Twitter users.</p>
           <p>Twitter is often cited as being a good surrogate for indicating uncertain outcomes and events. As we speak, millions of political conversations around the General Election 2015 are happening on Twitter. Many of theses messages, are offering influence and speculation on the political outcome of Thursday 07 May 2015. This raises two interesting questions - can the voting preferences on Twitter help us better track and understand Great Britain's offline political preferences, and also, what is the importance of Twitter as a medium for political influence?</p>
-          <p>To help answer this question and demonstrate the value of Great Britain’s Twitter conversations, Altius have created a data driven and machine-learnt solution which will enable you to interact and track how popular a political party is, on Twitter, across the UK and at a given County level.</p>
+          <p>To help answer these questions and demonstrate the value of Great Britain’s Twitter conversations, Altius have created a data driven and machine-learnt solution which will enable you to interact and track how popular a political party is, on Twitter, across the UK and at a given County level.</p>
           <p>For more information on Altius and to find out how we created this solution please click <a id="linkToContact" data-toggle="collapse" data-parent="#accordion" href="#section3">here</a></p>
       </div>
 </div>
 <div class="row">
     <div class="col-md-7">
-        <img src="~/Content/images/uk-map-orange.png" style="width:80%">
-    </div>
-    <div class="col-md-5">
 
         <!-- Carousel-->
         <div id="myCarousel" class="carousel slide" data-interval="false">
@@ -76,7 +79,7 @@
                             <h4>Net Voting Sentiment by Political Party to Date  (dummy data)</h4>
                         </div>
                         <img class="loaderImage" id="loaderImage2" src="~/Content/images/ajax-loader.gif" display="none" />
-                        <div id="chart2" class="chart">
+                        <div id="chart2" class="chart trend">
                             <svg></svg>
 
                         </div>
@@ -85,21 +88,21 @@
                         </div>
                     </div>
                 </div>
-                @*<div class="item">
-        <div class="container">
-            <div class="chart-caption">
-                <h4>Change in Voting Sentiment by Political Party (dummy data)</h4>
-            </div>
-            <img class="loaderImage" id="loaderImage3" src="~/Content/images/ajax-loader.gif" display="none" />
-            <div id="chart3" class="chart">
-                <svg></svg>
+                <div class="item">
+                    <div class="container">
+                        <div class="chart-caption">
+                            <h4>Change in Voting Sentiment by Political Party (dummy data)</h4>
+                        </div>
+                        <img class="loaderImage" id="loaderImage3" src="~/Content/images/ajax-loader.gif" display="none" />
+                        <div id="chart3" class="chart">
+                            <svg></svg>
 
-            </div>
-            <div class="chart-footer" id="chart-footer3">
-                Data last updated: <span id="pageUpdatedOn3" data-livestamp=""></span>
-            </div>
-        </div>
-    </div>*@
+                        </div>
+                        <div class="chart-footer" id="chart-footer3">
+                            Data last updated: <span id="pageUpdatedOn3" data-livestamp=""></span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Controls -->
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -112,8 +115,14 @@
         <!-- /.carousel -->
 
     </div>
+    <div class="col-md-5">
+        <input type="hidden" id="selectedAreaId" />
+        <input type="hidden" id="selectedAreaName" />
+        <div id="map" class="map"></div>
+
+    </div>
 </div>
-<div class="row">   
+<div class="row" id="chartFooter">   
     <div class="col-md-12">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -231,23 +240,58 @@
                             </div>
                         </div>
                     </div>
+            </div>
         </div>
+    </div>
 </div>
+
+<script>
+    // Copyright (c) 2013 Ryan Clark
+    // https://gist.github.com/rclark/5779673
+    L.TopoJSON = L.GeoJSON.extend({
+      addData: function(jsonData) {
+        if (jsonData.type === "Topology") {
+          for (key in jsonData.objects) {
+            geojson = topojson.feature(jsonData, jsonData.objects[key]);
+            L.GeoJSON.prototype.addData.call(this, geojson);
+          }
+        }
+        else {
+          L.GeoJSON.prototype.addData.call(this, jsonData);
+        }
+      }
+    });
+</script>
 
 <script type="text/javascript">
 
     var currentChartId = 0
     var currentChart = {
-        0: { code: "netVote", type: "bar", api: "/api/NetVote", dataFormat: ",.f" },
+        0: { code: "netVote", type: "bar", api: "/api/NetVote", dataFormat: ",.f", min: 0, max: 0 },
         1: { code: "netVotePercent", type: "bar", api: "/api/NetVotePercent", dataFormat: "%" },
-        2: { code: "netVoteTrend", type: "trend", api: "/api/NetVoteTrend" },
+        2: { code: "netVoteTrend", type: "trend", api: "/api/NetVoteTrend", min: 0, max: 0 },
         3: { code: "swing", type: "swing", api: "/api/Swing" }
     };
 
+    var selectedAreaId = 0
+
+
     $('.carousel').on('slide.bs.carousel', function (e) {
         currentChartId = $(e.relatedTarget).index();
-        chartLoad(currentChartId);
+        chartLoad(selectedAreaId);
     })
+
+    //re-load chart if a specific area is selected
+    $('#selectedAreaId').on("change", function () {
+        selectedAreaId = $(this).val();
+        if (selectedAreaId == '') selectedAreaId = 0;
+
+        if ($('#dropdownMapAreas').val(selectedAreaId) != selectedAreaId) {
+            $('#dropdownMapAreas').val(selectedAreaId);
+            chartLoad(selectedAreaId);
+        }
+    }).triggerHandler('change');
+
 
     function updateLivestamp(lastUpdated){
         jQuery('#pageUpdatedOn'+currentChartId).livestamp(lastUpdated);
@@ -267,39 +311,188 @@
 
    
     $(function () {
-        
-
-        //$('#linkToContact').on('click', function () {
-        //    $('html, body').animate({
-        //        scrollTop: $("#ContactUs").offset().top
-        //    }, 1000);
-        //});
-
-        chartLoad();
+        //show area map
+        mapLoad();
+        //load chart by default
+        chartLoad(selectedAreaId);
     });
 
-    function chartLoad()
-    {
-        var currentChartInfo = currentChart[currentChartId];
 
+    var selectedLayer;
+    var pinnedLayer;
+    var isLayerPinned = false;
+    var info;
+
+    function unselectLayer(layer) {
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToBack();
+        }
+        layer.setStyle({fillColor: '#bdbdbd', fillOpacity: 1, color: '#555', weight: 1, opacity: .5});
+        info.update();
+    }
+    
+    function resetToDefaultArea() {
+        if (isLayerPinned){
+            pinnerLayer = null;
+            isLayerPinned = false;
+        }
+        unselectLayer(selectedLayer)
+        selectedAreaId = 0;
+        chartLoad(selectedAreaId);
+    }
+
+    function mapLoad() {
+       
+        // create a map object and set the view to the coordinates 44,-31 with a zoom of 10
+        var map = L.map('map', { maxZoom: 8, minZoom: 5}),
+            topoLayer = new L.TopoJSON(),
+            $areaName = $('.areaname'),
+            colorScale = chroma
+                .scale(['#bdbdbd', '#bdbdbd'])
+                .domain([0,1]);
+
+        map.setView([55.6600933, -6.2659008], 5);
+
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            minZoom: 5,
+            maxZoom: 8
+        }).addTo(map);
+
+        //new L.control.zoom({ position: 'topright' }).addTo(map);
+
+        $.getJSON('/Content/map.topo.json').done(addTopoData);
+        function addTopoData(topoData) {
+            topoLayer.addData(topoData);
+            topoLayer.addTo(map);
+            topoLayer.eachLayer(handleLayer);
+        }
+
+        function handleLayer(layer) {
+            var randomValue = Math.random(),
+              fillColor = colorScale(randomValue).hex();
+
+            layer.setStyle({
+                fillColor: fillColor,
+                fillOpacity: 1,
+                color: '#555',
+                weight: 1,
+                opacity: 0.5
+            });
+
+
+            layer.on({
+                click: pinLayer,
+                mouseover: enterLayer,
+                //mouseout: leaveLayer
+            });
+        }
+
+        info = L.control({position: 'bottomleft'});
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (name) {
+
+            if (name) {
+                this._div.innerHTML = '<h4>' + name + '</h4>' + '<br/>Reset to <button class="infoButton" onclick="resetToDefaultArea()">Great Britain</button><br/><br/>';
+            }
+            else {
+                this._div.innerHTML = '<h4>Great Britain</h4><br/>';
+            }
+            this._div.innerHTML += '<br/><p style="font-text:smaller">Hover over to update chart on the left. Click on an area to explore all charts</p>'
+        };
+
+        info.addTo(map);
+
+        function enterLayer(e) {
+            var layer = e.target;
+
+            if (!isLayerPinned) {
+
+
+                if (selectedLayer) {
+                    unselectLayer(selectedLayer)
+                }
+
+                layer.setStyle({
+                    fillColor: '#800026',
+                    color: 'white',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.7
+                });
+
+                if (!L.Browser.ie && !L.Browser.opera) {
+                    layer.bringToFront();
+                }
+                info.update(layer.feature.properties.name);
+                selectArea(layer.feature.properties.geoshapeid, layer.feature.properties.name)
+
+                selectedLayer = layer;
+            }
+            //else {
+                //console.log("We have a pinned layer")
+            //}
+
+        }
+
+        
+
+
+        function pinLayer(e)
+        {
+            if (isLayerPinned && pinnedLayer == e.target) {
+                //console.log("pinLayer: unpinned the existing layer")
+                isLayerPinned = false;
+
+                pinnedLayer = null;
+            }
+            else {
+                //console.log("pinLayer: we have a new layer to be pinned")
+                isLayerPinned = true;
+                pinnedLayer = e.target;
+            }
+        }
+
+
+
+        function selectArea(id, name) {
+            $('#selectedAreaName').val(name);
+            $('#selectedAreaId').val(id).change();
+        }
+    }
+
+    function chartLoad(locationId)
+    {
+        var customNoDataText = "No data available for " + $('#selectedAreaName').val()
+
+        var currentChartInfo = currentChart[currentChartId];
         chartOnPreLoad();
         $.ajax({
             type: "GET",
-            url: currentChartInfo.api, 
+            url: currentChartInfo.api,
+            data: {'id':locationId},
             cache: false,
             dataType: 'json',
             success: function (data) {
                 chartOnAfterLoad()
 
-                var chartData;
+                var chartData = null;
 
                 if (currentChartInfo.code == "netVote") 
                 {
-                    chartData = NetVoteChartData(data);
+                    chartData = NetVoteChartData(data, currentChartInfo);
                 }
                 else if (currentChartInfo.code == "netVoteTrend")
                 {
-                    chartData = NetVoteTrendChartData(data);
+                    chartData = NetVoteTrendChartData(data, currentChartInfo);
                 }
                 else if (currentChartInfo.code == "netVotePercent") {
                     chartData = NetVotePercentChartData(data);
@@ -308,17 +501,34 @@
                     chartData = SwingChartData(data)
                 }
 
+                if (chartData[0].values.length > 0) 
+                {
+                    if (currentChartInfo.type == "bar") {
+                        drawD3BarChartObject(chartData, currentChartInfo)
+                    }
+                    else if (currentChartInfo.type == "trend") {
+                        drawD3LineChartObject(chartData)
+                    }
+                    else if (currentChartInfo.type == "swing") {
+                        // swing
+                        drawD3SwingChartObject(chartData)
+                    }
+                }
+                else {
+                    //delete all chart related objects
+                    d3.select('#chart' + currentChartId).selectAll("*").remove()
 
-                if (currentChartInfo.type == "bar") {
-                    drawD3BarChartObject(chartData, currentChartInfo)
+                    //create a new "chart" with No Data text message
+                    d3.select('#chart' + currentChartId).append('svg')
+                    .append("text")
+                    .attr("x", "235")
+                    .attr("y", "35")
+                    .attr("dy", "-.7em")
+                    .attr("class", "nvd3 nv-noData")
+                    .style("text-anchor", "middle")
+                    .text(customNoDataText);
                 }
-                else if (currentChartInfo.type == "trend"){
-                    drawD3LineChartObject(chartData)
-                }
-                else if (currentChartInfo.type == "swing"){
-                    // swing
-                    drawD3BarChartObject(chartData)
-                }
+            
             },
             error: function (response) {
                 $('#loaderImage' + currentChartId ).hide();
@@ -328,31 +538,62 @@
 
     function drawD3BarChartObject(chartData, currentChartInfo)
     {
+        if (currentChartInfo.code == "netVote") {
+            var formatter = d3.format(",d")
+        }
+        else if (currentChartInfo.code == "netVotePercent") {
+            var formatter = d3.format(",.2%");
+        }
 
         nv.addGraph(function(){
             generate:
                 var chart = nv.models.discreteBarChart()
                     .x(function (d) { return d.label })
                     .y(function (d) { return d.value })
-                    .staggerLabels(true);
-                    
-            var tmpTicks = chartData.map(function (e) { return e.values.map(function (d) { return d.value }); });
-            
+                    .valueFormat(function(d) { return formatter(d)})
+                    .staggerLabels(true)
+                    .showValues(true)
+                    .tooltips(false);
+
+
+            var tmpTicks = [[]];
+            if (currentChartInfo.code == "netVote") {
+                chart.yAxis.axisLabel("Number of Tweets")
+
+
+                var closest10N = Math.pow(10, Math.floor(Math.log(chartData[0].maxValue) / Math.LN10));   // find the closest value 10^N to the given Max Value
+
+                var maxTickValue = 0
+                if ((chartData[0].maxValue - closest10N) / closest10N <= 0.5)   // additional logic to improve how values are spread on the chart
+                {
+                    maxTickValue = closest10N + Math.pow(10, Math.floor(Math.log(chartData[0].maxValue - closest10N) / Math.LN10))   
+                }
+                else
+                {
+                    maxTickValue = 5 * closest10N
+                }
+
+                // generate new tick values
+                var maxTickValueCount = 5
+                var tickVal = 0
+                for (tickValCount = 0; tickValCount < maxTickValueCount; tickValCount++)
+                {
+                    tickVal += maxTickValue / maxTickValueCount
+                    tmpTicks[0].push(tickVal)
+                }
+                
+            }
+            else if (currentChartInfo.code == "netVotePercent") {
+                chart.yAxis.axisLabel("Percentage of Net Voting Sentiment (%)")
+
+                tmpTicks = [[0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.7, 0.8, 0.9, 1]];
+            }
+
+            // use generated tickValues on yAxis            
             chart.yAxis
                 .tickFormat(function (d) { return d3.format(currentChartInfo.dataFormat)(d); })
                 .tickValues([].concat.apply([], tmpTicks));
 
-
-            if (currentChartInfo.code == "netVote")
-            {
-                chart.yAxis.axisLabel("Number of Tweets")
-            }
-            else if (currentChartInfo.code == "netVotePercent")
-            {
-                chart.yAxis.axisLabel("Percentage of Net Voting Sentiment (%)")
-            }
-
-            
             d3.select('#chart'+ currentChartId +' svg')
               .datum(chartData)
               .transition().duration(500)
@@ -373,9 +614,13 @@
                 var chart = nv.models.lineChart()
                     .x(function (d) { return d[0] })
                     .y(function (d) { return d[1] })
-                    .useInteractiveGuideline(true)
+                    .options({
+                        transitionDuration: 300,
+                        useInteractiveGuideline: true
+                    })
+                    
             
-            var tmpTickDates = chartData.map(function (e) { return e.values.map(function (d) { return d[0]; }); });
+            var tmpTickDates = chartData[0].values.map(function (e) { return e.values.map(function (d) { return d[0]; }); });
 
             chart.xAxis
                 .showMaxMin(true)
@@ -383,12 +628,28 @@
                 .tickValues([].concat.apply([], tmpTickDates))
                 .rotateLabels(-45);
 
+
+
+            var tmpTicks = [[]];
+            var valueRange = chartData[0].maxValue - chartData[0].minValue
+
+            // generate new tick values
+            var maxTickValueCount = 5
+            var tickVal = chartData[0].minValue
+            for (tickValCount = 0; tickValCount < maxTickValueCount - 1; tickValCount++)
+            {
+                tickVal += Math.round(valueRange / maxTickValueCount)
+                tmpTicks[0].push(tickVal)
+            }
+                
             chart.yAxis
                 .tickFormat(d3.format(',.1'))
+                .tickValues([].concat.apply([], tmpTicks))          // use generated tickValues on xAxis            
                 .axisLabel("Number of Tweets")
 
+
             d3.select('#chart' + currentChartId + ' svg')
-              .datum(chartData)
+              .datum(chartData[0].values)
               .transition().duration(500)
               .call(chart)
             ;
@@ -399,7 +660,30 @@
         })
     }
 
+    function drawD3SwingChartObject(chartData) {
+        generate:
+            nv.addGraph(function () {
+                chart = nv.models.parallelCoordinates()
+                    .dimensions(["Original Net Voting Sentiment", "To Date Net Voting Sentiment"]);
+                // make all lines the same color like this
+                //chart.color(['steelblue']);
+                d3.select('#chart' + currentChartId + ' svg')
+                        .datum(chartData)
+                        .call(chart);
+                nv.utils.windowResize(chart.update);
+                return chart;
+            })
+    }
+
     function NetVotePercentChartData(data) {
+
+        if (data.data == null) {
+            return [{
+                values: [],
+                key: "NetVotePercentChart"
+            }];
+        }
+
         updateLivestamp(data.lastUpdated)
         dataValues = data.data;
 
@@ -412,44 +696,136 @@
             key: "NetVotePercentChart"
         }];
     }
-    function NetVoteChartData(data) {
+    function NetVoteChartData(data, currentChartInfo) {
         updateLivestamp(data.lastUpdated)
-        dataValues = data.data;
-
-        var vals = [];
-        for (var i in dataValues) {
-            vals.push({ label: dataValues[i].name, value: dataValues[i].count });
+        
+        if (data.data == null)
+        {
+            return [{
+                values: [],
+                key: "NetVoteChart",
+                minValue: 0,
+                maxValue: 0
+            }];
         }
+
+        dataValues = data.data;
+        
+        var vals = [];
+        var min = dataValues[0].count
+        var max = dataValues[0].count;
+        for (var i in dataValues) {
+
+            if (dataValues[i].count < min) {
+                min = dataValues[i].count
+            }
+
+            if (dataValues[i].count > max) {
+                max = dataValues[i].count
+            }
+            vals.push({ label: dataValues[i].name, value: dataValues[i].count });
+            
+
+        }
+
+        
         return [{
             values: vals,
-            key: "NetVoteChart"
+            key: "NetVoteChart",
+            minValue: min,
+            maxValue: max
         }];
+
+        
     }
 
     function NetVoteTrendChartData(data)
     {
+
+        if (data.data == null) {
+            return [{
+                values: [],
+                key: "TrendChart",
+                minValue: 0,
+                maxValue: 0
+            }];
+        }
+
         updateLivestamp(data.lastUpdated)
         dataValues = data.data
-        return data.data;
+
+        minValue = dataValues[0].values[0][1]
+        maxValue = dataValues[0].values[0][1]
+        for (i in dataValues) {
+            var seriesValues = dataValues[i]
+            for (j in seriesValues.values) {
+                if (seriesValues.values[j][1] > maxValue){
+                    maxValue = seriesValues.values[j][1]
+                }
+                if (minValue > seriesValues.values[j][1]){
+                    minValue = seriesValues.values[j][1]
+                }
+            }
+        }
+        return [{
+            values: dataValues,
+            key: "TrendChart",
+            minValue: minValue,
+            maxValue: maxValue
+        }];
     }
 
     function SwingChartData(data) {
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                updateLivestamp(key)
-                dataValues = data[key];
-            }
-            break;
-        }
+        //for (var key in data) {
+        //    if (data.hasOwnProperty(key)) {
+        //        updateLivestamp(key)
+        //        dataValues = data[key];
+        //    }
+        //    break;
+        //}
 
-        var vals = [];
-        for (var i in dataValues) {
-            vals.push({ label: dataValues[i].name, value: dataValues[i].count });
+        //var vals = [];
+        //for (var i in dataValues) {
+        //    vals.push({ label: dataValues[i].name, value: dataValues[i].count });
+        //}
+        //return [{
+        //    values: vals,
+        //    key: "SwingChart"
+        //}];
+
+        return [
+        {
+            "name": "Lab",
+            "Original Net Voting Sentiment": "150",
+            "To Date Net Voting Sentiment": "220"
+        },
+        {
+            "name": "Snp",
+            "Original Net Voting Sentiment": "15",
+            "To Date Net Voting Sentiment": "23"
+        },
+        {
+            "name": "Con",
+            "Original Net Voting Sentiment": "178",
+            "To Date Net Voting Sentiment": "200"
+        },
+        {
+            "name": "LD",
+            "Original Net Voting Sentiment": "55",
+            "To Date Net Voting Sentiment": "22"
+        },
+        {
+            "name": "Grn",
+            "Original Net Voting Sentiment": "3",
+            "To Date Net Voting Sentiment": "5"
+        },
+        {
+            "name": "Ukip",
+            "Original Net Voting Sentiment": "2",
+            "To Date Net Voting Sentiment": "-5"
         }
-        return [{
-            values: vals,
-            key: "SwingChart"
-        }];
+        ]
+
     }
 
 

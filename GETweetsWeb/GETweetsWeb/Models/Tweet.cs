@@ -12,7 +12,7 @@ namespace GETweetsWeb.Models
 
         public MapLocation(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 Id = 0;
                 Name = "UK";
@@ -20,8 +20,8 @@ namespace GETweetsWeb.Models
             else
             {
                 // read from lookup table
-                Id = 123;
-                Name = "DummyLocation";
+                Id = id.Value;
+                Name = "DummyLocation" + id.Value.ToString();
             }
         }
     }
@@ -29,16 +29,16 @@ namespace GETweetsWeb.Models
     
 
 
-    public class Tweet
-    {
-        public DateTime Timestamp { get; set; }
-        public MapLocation Location {get; set;}
-        public string twitterUser { get; set; }
-        //public string twitterMsg { get; set; }
-        public PoliticalParty party { get; set; }
-        public int SentimentScore { get; set; }
+    //public class Tweet
+    //{
+    //    public DateTime Timestamp { get; set; }
+    //    public MapLocation Location {get; set;}
+    //    public string twitterUser { get; set; }
+    //    //public string twitterMsg { get; set; }
+    //    public PoliticalParty party { get; set; }
+    //    public int SentimentScore { get; set; }
 
-    }
+    //}
 
     public class TweetsByPartyCount {
         public string Name { get; set; }
