@@ -24,25 +24,22 @@ namespace GETweetsWeb.Controllers
         [ResponseType(typeof(NetVoteData))]
         public NetVoteData Get(int? id = null)
         {
+            var netVote = repository.GetNetVoteByLocation(id);
+            var lastUpdated = repository.GetNetVoteTimestamp();
 
-            var mapLocationFilter = new MapLocation(id);
-
-            var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);
-
-            if (tweets.Count() == 0)
+            if (netVote.Count() == 0)
             {
-                return new NetVoteData() { LastUpdated = DateTime.Now, Data = null };
+                return new NetVoteData() { LastUpdated = lastUpdated, Data = null };
             }
 
-            var data = new List<TweetsByPartyCount>();
-            var dataGroup = from t in tweets group t by t.PoliticalParty into g orderby g.Key select new { party = g.Key, count = g.Count()};
+            var data = new List<NetVoteModel>();
+            var dataGroup = from t in netVote group t by t.Party into g orderby g.Key select new { party = g.Key, count = g.Sum(x => x.PositiveCount)};
             foreach (var item in dataGroup)
             {
                 var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.party.ToLower()).FirstOrDefault();
-                data.Add(new TweetsByPartyCount() {Name = party.Name, Count = item.count });
+                data.Add(new NetVoteModel() {Name = party.Name, Count = item.count.Value, Color = party.Color, Order = party.Order });
             }
-
-            return new NetVoteData() { LastUpdated = DateTime.Now, Data = data };
+            return new NetVoteData() { LastUpdated = lastUpdated, Data = data.OrderBy(d => d.Order).ToList() };
         }
 
         

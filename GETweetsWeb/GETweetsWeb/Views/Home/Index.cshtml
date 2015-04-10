@@ -23,19 +23,20 @@
 
 <div class="bs-docs-header" id="content" tabindex="-1">
       <div class="container">
-        <h1>General Election 2015  voting preferences on Twitter</h1>
-          <p>The General Election 2015 Twitter tracker, highlights the near real-time voting preferences of Great Britain’s Twitter users.</p>
-          <p>Twitter is often cited as being a good surrogate for indicating uncertain outcomes and events. As we speak, millions of political conversations around the General Election 2015 are happening on Twitter. Many of theses messages, are offering influence and speculation on the political outcome of Thursday 07 May 2015. This raises two interesting questions - can the voting preferences on Twitter help us better track and understand Great Britain's offline political preferences, and also, what is the importance of Twitter as a medium for political influence?</p>
-          <p>To help answer these questions and demonstrate the value of Great Britain’s Twitter conversations, Altius have created a data driven and machine-learnt solution which will enable you to interact and track how popular a political party is, on Twitter, across the UK and at a given County level.</p>
-          <p>For more information on Altius and to find out how we created this solution please click <a id="linkToContact" data-toggle="collapse" data-parent="#accordion" href="#section3">here</a></p>
+        <h1><b>General Election 2015</b> voting preferences on Twitter</h1>
+          <p>The <b>General Election 2015</b> Twitter tracker, highlights the near real-time voting preferences of Great Britain’s Twitter users.</p>
+          <p>As we speak, millions of political conversations about The <b>General Election 2015</b> are happening on Twitter. Many of theses messages 
+            are offering influence and speculation on the outcome of Election Day on <b>Thursday 07 May 2015</b>. This raises two interesting questions - can voting 
+            preferences on Twitter help us better track and understand Great Britain's offline political preferences, and also, what is the importance of 
+            Twitter as a medium for political influence?</p>
+          <p>To help answer these questions and demonstrate the importance of Great Britain’s Twitter conversations, Altius have created a data driven and 
+            machine-learnt solution. Across the UK and at a given County level you can interact and track how popular a political party is on Twitter.</p>
+          <p>For more information on Altius and to find out how we created this solution please <a id="linkToContact" data-toggle="collapse" data-parent="#accordion" href="#section3"><b>scroll down</b>here</a></p>
       </div>
 </div>
 <div class="row">
     <div class="col-md-7">
-
-        <!-- Carousel-->
         <div id="myCarousel" class="carousel slide" data-interval="false">
-            <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -46,7 +47,7 @@
                 <div class="item active">
                     <div class="container">
                         <div class="chart-caption">
-                            <h4>Net Voting Preference by Political Party (dummy data)</h4>
+                            <h4>Voting Intention by Political Party</h4>
                         </div>
                         <img class="loaderImage" id="loaderImage0" src="~/Content/images/ajax-loader.gif" display="none" />
                         <div id="chart0" class="chart">
@@ -61,7 +62,7 @@
                 <div class="item">
                     <div class="container">
                         <div class="chart-caption">
-                            <h4>Percentage of Net Voting Preference by Political Party (%) (dummy data)</h4>
+                            <h4>Percentage of Total Voting Intention by Political Party (%)</h4>
                         </div>
                         <img class="loaderImage" id="loaderImage1" src="~/Content/images/ajax-loader.gif" display="none" />
                         <div id="chart1" class="chart">
@@ -76,7 +77,7 @@
                 <div class="item">
                     <div class="container">
                         <div class="chart-caption">
-                            <h4>Net Voting Sentiment by Political Party to Date  (dummy data)</h4>
+                            <h4>Voting Intention by Political Party to Date</h4>
                         </div>
                         <img class="loaderImage" id="loaderImage2" src="~/Content/images/ajax-loader.gif" display="none" />
                         <div id="chart2" class="chart trend">
@@ -91,7 +92,7 @@
                 <div class="item">
                     <div class="container">
                         <div class="chart-caption">
-                            <h4>Change in Voting Sentiment by Political Party (dummy data)</h4>
+                            <h4>Sentiment of Total Tweets by Political Party</h4>
                         </div>
                         <img class="loaderImage" id="loaderImage3" src="~/Content/images/ajax-loader.gif" display="none" />
                         <div id="chart3" class="chart">
@@ -103,8 +104,22 @@
                         </div>
                     </div>
                 </div>
+                @*<div class="item">
+                    <div class="container">
+                        <div class="chart-caption">
+                            <h4>Change in Voting Sentiment by Political Party (dummy data)</h4>
+                        </div>
+                        <img class="loaderImage" id="loaderImage4" src="~/Content/images/ajax-loader.gif" display="none" />
+                        <div id="chart4" class="chart">
+                            <svg></svg>
+
+                        </div>
+                        <div class="chart-footer" id="chart-footer4">
+                            Data last updated: <span id="pageUpdatedOn4" data-livestamp=""></span>
+                        </div>
+                    </div>
+                </div>*@
             </div>
-            <!-- Controls -->
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                 <span class="icon-prev"></span>
             </a>
@@ -112,14 +127,11 @@
                 <span class="icon-next"></span>
             </a>
         </div>
-        <!-- /.carousel -->
-
     </div>
     <div class="col-md-5">
         <input type="hidden" id="selectedAreaId" />
         <input type="hidden" id="selectedAreaName" />
         <div id="map" class="map"></div>
-
     </div>
 </div>
 <div class="row" id="chartFooter">   
@@ -133,34 +145,31 @@
                 </div>
                 <div id="section1" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <p>There are three key elements to The General Election 2015 Twitter tracker. To demonstrate how to process large volumes of unstructured data in near real-time, classify and then visualise, we have used Microsoft’s Azure cloud based infrastructure and technology. This workflow is completed in a seamless end-to end manner.</p>
+                        <p>In near real-time we are extracting, classifying and then visualising the analysis of millions of tweets. 
+                            To do this, there are three key elements which when connected allow us to complete a seamless end-to-end workflow using Microsoft 
+                            Corporation’s Azure cloud based infrastructure and technology.</p>
                         <ol>
                             <li>Data Provision</li>
                             <li>Classification & Analysis</li>
                             <li>Front-end visualisation</li>
                         </ol>
-                        <p>
-                            1. Data Provision
-                            <ul>
-                                <li>An Azure SQL Database was carefully configured to extract, transform and load Twitter conversations.</li>
-                            </ul>
-                        </p>
-                        <p>
-                            2. Classification & Analysis
-                            <ul>
-                                <li>Azure Machine Learning Studio, is used to build the classification model that identifies voting preference and political netVotePercent for each tweet in our SQL database.</li>
-                                <li>Azure Stream Analytics is used to aggregate and apply the location information to the data.</li>
-                                <li>The updated data is then written back and stored on the Azure SQL Database with the needed voting preference, political party and location assigned.</li>
-                            </ul>
-                        </p>
-                        <p>
-                            3.Front-end visualisation
-                            <ul>
-                                <li>Customer webpage is created using open source graphing charts libraries</li>
-                                <li>A web-service API calls the necessary aggregated data</li>
-                                <li>The data is updated twice daily in order to reduce data processing costs</li>
-                            </ul>
-                        </p>
+                        <p>1. Data Provision</p>
+                        <ul>
+                            <li>An Azure SQL Database was carefully configured to extract, transform and load Twitter conversations.</li>
+                        </ul>
+                        <p>2. Classification & Analysis</p>
+                        <ul>
+                            <li>Azure Machine Learning Studio, is used to train, build and execute the classification model that 
+                                identifies voting preference and political party for each tweet in our SQL database.</li>
+                            <li>The updated data is then written back and stored on the Azure SQL Database with the needed voting preference, 
+                                political party and location assigned.</li>
+                        </ul>
+                        <p>3.Front-end visualisation</p>
+                        <ul>
+                            <li>Customer webpage is created using graphing charts from publically available libraries</li>
+                            <li>A web-service API calls the necessary aggregated data</li>
+                            <li>The data is updated twice daily in order to reduce data processing costs</li>
+                        </ul>
                         <p>For more information on the specific of our methodology please email</p>
                     </div>
                 </div>
@@ -173,24 +182,35 @@
                 </div>
                 <div id="section2" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <h3>Why County and not Constituency mapping?</h3>
-                        <p>Due to the nuisances of Twitter usage it is very difficult to map General Election 2015 analysis to constituency level. Twitter users tend not to say exactly where they live or indeed our registered to vote. This is especially true in large cities like London.</p>
-                        <p> County level, provides enough granularity to show how political parties fair in popularity and how this popularity may be reflected or influence the outcome of the General Election 2015 result for the given constituencies that our housed within a relevant County.</p>
+                        <h3>Why county and not constituency mapping?</h3>
+                        <p>Due to the nuisances of Twitter usage, it is very difficult to map the General Election 2015 analysis to constituency level. 
+                            Twitter users tend to not say exactly where they live or indeed our registered to vote. This is especially true in large cities such as 
+                            London and Birmingham</p>
+                        <p>For the given constituencies that our housed within a relevant county, a county level view provides enough granularity to show how political parties 
+                            fair in popularity and how this popularity may be reflected or influence the result of the General Election 2015</p>
 
-                        <h3>What does Net Voting Preference mean?</h3>
-                        <p> Twitter user can display many emotions and preferences towards political parties. Net Voting Preference is simply the positive voting preferences less the negative.</p>
+                        <h3>What does voting intention mean?</h3>
+                        <p>Shows Twitters users positive voting intention for a given political party. Thereby, suggesting Twitter users’ voting preferences by political party.</p>
 
-                        <h3>What is ‘Swing’?</h3>
-                        <p>This simply shows a unique Twitter user’s first voting preference vs their latest for the relevant political parties. This chart enables a viewer to see how preferences are changing and which party is ‘winning’ preference from another party and in what magnitude. A user who only tweets once is not included in the chart.</p>
+                        <h3>What does sentiment of total tweets mean?</h3>
+                        <p>In at tweet, a Twitter user can communicate many positive and negative emotions and preferences towards political parties. 
+                            Voting Sentiment is showing the total number of positive and negative tweets for each political party.</p>
 
                         <h3>Is Twitter representative of the UK population?</h3>
-                        <p>No, Twitter is not. Some key voter demographic groups are under or over represented on Twitter. However, Twitter is a key media channel for political parties - just look at the effort of political parties to reach out to voters through this medium of interaction.</p>
+                        <p>No, Twitter is not. Some key voter demographic groups are under or over represented on Twitter. However, Twitter is a key media channel 
+                            for political parties - just look at the effort of political parties to reach out to voters through this medium of interaction.</p>
 
                         <h3>What is machine learning?</h3>
-                        <p>Machine learning is a key part of artificial intelligence which enables human insights and computers (machines) to do things such as play games and solve complex statistical-computation problems. Machine learning is normally used to solve very specific types of real world problems that can’t be solved using traditional Data Analysis or Business Intelligence. These problems can be broadly divided into three categories: Forecasting, Classification & Optimization. In this instance, we used machine learning to help train our model which classifies a Twitter user’s individual preferences towards the political parties.</p>
+                        <p>Machine learning is a key part of artificial intelligence which enables human insights and computers (machines) to do things such as play 
+                            games and solve complex statistical-computation problems. Machine learning is normally used to solve very specific types of real world problems 
+                            that can’t be solved using traditional Data Analysis or Business Intelligence. These problems can be broadly divided into three categories: 
+                            Forecasting, Classification & Optimization. In this instance, we used machine learning to help train our model which classifies a 
+                            Twitter user’s individual preferences towards the political parties.</p>
 
                         <h3>Predictive analytics is all the rage, why did you not predict General Election 2015</h3>
-                        <p>The Data Science Practice are experts in implementing predictive analytics for commercial advantage. However, we also know we have to take things step by step. Accurately predicting the outcome of each of 650 constituencies for a General Election using Twitter is not an easy task. This is especially with the location mapping nuisances referenced above – in 2019 perhaps!</p>
+                        <p>The Data Science Practice are experts in implementing predictive analytics for commercial advantage. However, 
+                            we also know we have to take things step by step. Accurately predicting the outcome of each of 650 constituencies for a General Election 
+                            using Twitter is not an easy task. Especially so, with the location mapping nuisances referenced above – in 2019 perhaps!</p>
                     </div>
                 </div>
             </div>
@@ -203,7 +223,8 @@
                 <div id="section3" class="panel-collapse collapse">
                     <div class="panel-body">
                         <h2>About Altius</h2>
-                        <p>We are a highly focused management consultancy firm who specialise in helping our clients achieve commercial advantage through the use of data. We enable our clients to better understand their customers, prospects & suppliers, model their behaviour and then predict this</p>
+                        <p>We are a highly focused management consultancy firm who specialise in helping our clients achieve commercial advantage through the use of data. 
+                            We enable our clients to better understand their customers, prospects & suppliers, model their behaviour and then predict this.</p>
                         <div class="row">
                             <div class="col-md-4">
                                 <h3><a href="http://altius.co.uk/strategy.html" target="_blank" title="Strategy">Strategy</a></h3>
@@ -211,21 +232,25 @@
                             </div>
                             <div class="col-md-4">
                                 <h3><a href="http://altius.co.uk/Data-Science.html" target="_blank" title="Data Science">Data Science</a></h3>
-                                <p>Predictive analytics solutions that use artificial intelligence solutions to uncover hidden patterns, advanced forecasting and process optimisation giving greater business insight.</p>
+                                <p>Predictive analytics solutions that use artificial intelligence solutions to uncover hidden patterns, advanced forecasting and 
+                                    process optimisation giving greater business insight.</p>
                             </div>
                             <div class="col-md-4">
                                 <h3><a href="http://altius.co.uk/visual-design.html" target="_blank" title="Design">Design</a></h3>
-                                <p>Ensuring that the message is clearly communicated by applying user interface (ui) and user experience (ux) design principles to transform how data is presented and visualised across devices.<p>
+                                <p>Ensuring that the message is clearly communicated by applying User Interface (UI) and User Experience (UX) 
+                                    design principles to transform how data is presented and visualised across devices.<p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <h3><a href="http://altius.co.uk/managed-services.html" target="_blank" title="Support">Support</a></h3>
-                                <p>A full managed service solution that provides business, technical and infrastructure support for our clients data infrastructure. Our services include cloud, hosting, application and insight services</p>
+                                <p>A full managed service solution that provides business, technical and infrastructure support for our clients data infrastructure. 
+                                    Our services include cloud, hosting, application and insight services</p>
                             </div>
                             <div class="col-md-6">
                                 <h3><a href="http://altius.co.uk/solutions.html" target="_blank" title="Technology">Technology</a></h3>
-                                <p>Implementing advanced technology to allow companies to convert their data to information. Our technology solution include Data Warehousing, Big Data and Machine learning solutions.</p>
+                                <p>Implementing advanced technology to allow companies to convert their data to information. 
+                                    Our technology solution include Data Warehousing, Big Data and Machine learning solutions.</p>
                             </div>
                         </div>
                             <h2 id="ContactUs">Contact Altius</h2>
@@ -265,103 +290,180 @@
 
 <script type="text/javascript">
 
-    var currentChartId = 0
+    var map;
+    var currentChartId = 0;
     var currentChart = {
-        0: { code: "netVote", type: "bar", api: "/api/NetVote", dataFormat: ",.f", min: 0, max: 0 },
-        1: { code: "netVotePercent", type: "bar", api: "/api/NetVotePercent", dataFormat: "%" },
-        2: { code: "netVoteTrend", type: "trend", api: "/api/NetVoteTrend", min: 0, max: 0 },
-        3: { code: "swing", type: "swing", api: "/api/Swing" }
+        0: { code: "netVote", type: "bar", api: "/api/NetVote", xaxis: "Political Party", yaxis: "Number of Tweets" },
+        1: { code: "netVotePercent", type: "bar", api: "/api/NetVotePercent", xaxis: "Political Party", yaxis: "Percentage of Voting Sentiment (%)" },
+        2: { code: "netVoteTrend", type: "trend", api: "/api/NetVoteTrend", xaxis: "Date", yaxis: "Number of Tweets" },
+        3: { code: "sentiment", type: "multibar", api: "/api/SentimentVote", xaxis: "Political Party", yaxis: "Number of Tweets" }
+        //4: { code: "swing", type: "swing", api: "/api/Swing" }
     };
 
-    var selectedAreaId = 0
+    var selectedAreaId = 0;
+    var selectedAreaName = "Great Britain";
 
-
+    //draw a different chart when a new chart type is selected / carousel is scrolled to the sides
     $('.carousel').on('slide.bs.carousel', function (e) {
+        chartClean();
         currentChartId = $(e.relatedTarget).index();
-        chartLoad(selectedAreaId);
-    })
+        chartLoad();
+    });
 
-    //re-load chart if a specific area is selected
+    //update chart when a specific map area is selected
     $('#selectedAreaId').on("change", function () {
         selectedAreaId = $(this).val();
-        if (selectedAreaId == '') selectedAreaId = 0;
-
-        if ($('#dropdownMapAreas').val(selectedAreaId) != selectedAreaId) {
-            $('#dropdownMapAreas').val(selectedAreaId);
-            chartLoad(selectedAreaId);
+        if (selectedAreaId === '') {
+            selectedAreaId = 0;
+            $('#selectedAreaName').val("Great Britain");
         }
+        chartLoad();
     }).triggerHandler('change');
 
-
-    function updateLivestamp(lastUpdated){
+    // update chart timestamp
+    function updateLivestamp(lastUpdated) {
         jQuery('#pageUpdatedOn'+currentChartId).livestamp(lastUpdated);
     }
 
-    function chartOnPreLoad()
-    {
-        $('.chart-footer').hide();
-        $('#loaderImage' + currentChartId).show();
-    }
-
-    function chartOnAfterLoad()
-    {
-        $('#chart-footer' + currentChartId).show();
-        $('#loaderImage' + currentChartId).hide();
-    }
-
-   
     $(function () {
-        //show area map
         mapLoad();
-        //load chart by default
-        chartLoad(selectedAreaId);
     });
 
+    var mapInfoBox;
+    var defaultMapFillColor = "#bdbdbd";
+    var activeMapAreaFillColor = "#ffffff";//"#800026";
 
-    var selectedLayer;
-    var pinnedLayer;
-    var isLayerPinned = false;
-    var info;
+    var selectedMapArea;
+    var selectedMapAreaFillColor;
+    var isMapAreaClicked = false;
+    var mapVoteColorData = null;
 
-    function unselectLayer(layer) {
-        if (!L.Browser.ie && !L.Browser.opera) {
+    function resetToDefaultMap() {
+        if (isMapAreaClicked) {
+            isMapAreaClicked = false;
+        }
+        mapInfoBox.update(null, false);
+
+        unselectMapArea(selectedMapArea);
+        selectedAreaId = 0;
+        $('#selectedAreaName').val("Great Britain");
+
+        chartLoad();
+    }
+
+    function handleLayer(layer) {
+
+        function getFillColor(geoshapeid) {
+            if (!mapVoteColorData) {
+                return defaultMapFillColor;
+            }
+            else {
+                return mapVoteColorData.data[geoshapeid];
+            }
+        }
+
+        // defines fillcolor for a specific map area
+        fillColor = getFillColor(layer.feature.properties.geoshapeid);
+
+        layer.setStyle({
+            fillColor: fillColor,
+            fillOpacity: 1,
+            color: '#555',
+            weight: 1,
+            opacity: 0.5
+        });
+
+        // defines client events available for user
+        layer.customFillColor = fillColor;
+        layer.addEventListener("click", selectMapArea, false);
+        layer.addEventListener("mouseover", updateInfoBox, false);
+        layer.addEventListener("mouseout", resetInfoBox, false);
+    }
+
+    function selectMapArea(e) {
+        if (selectedMapArea) {
+            unselectMapArea(selectedMapArea);
+        }
+
+        //update selectedMapArea and make a note of the fill color
+        var layer = e.target;
+        selectedMapArea = layer;
+
+        var layerFillColor = e.target.customFillColor;
+        selectedMapAreaFillColor = layerFillColor;
+
+        //update mapInfoBox and hidden inputs which will drive an update of the charts
+        mapInfoBox.update(layer.feature.properties.name, true);
+
+        $('#selectedAreaName').val(layer.feature.properties.name);
+        $('#selectedAreaId').val(layer.feature.properties.geoshapeid).change();
+
+        // highlight selected map area on the map
+        layer.setStyle({
+            fillColor: activeMapAreaFillColor,
+            color: '#555',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.7
+        });
+
+        if (layer && !L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        }
+    }
+
+    function unselectMapArea(layer) {
+        selectedMapArea = null;
+
+        // show previously selected area as a normal map area (without any hightlighting)
+        layer.setStyle({ fillColor: selectedMapAreaFillColor, fillOpacity: 1, color: '#555', weight: 1, opacity: '.5' });
+        if (layer && !L.Browser.ie && !L.Browser.opera) {
             layer.bringToBack();
         }
-        layer.setStyle({fillColor: '#bdbdbd', fillOpacity: 1, color: '#555', weight: 1, opacity: .5});
-        info.update();
-    }
-    
-    function resetToDefaultArea() {
-        if (isLayerPinned){
-            pinnerLayer = null;
-            isLayerPinned = false;
-        }
-        unselectLayer(selectedLayer)
-        selectedAreaId = 0;
-        chartLoad(selectedAreaId);
     }
 
+    function resetInfoBox(e) {
+        if (selectedMapArea) {
+            mapInfoBox.update(selectedMapArea.feature.properties.name, true);
+        }
+        else {
+            mapInfoBox.update("Great Britain", false);
+        }
+    }
+
+    function updateInfoBox(e) {
+        var layer = e.target;
+        mapInfoBox.update(layer.feature.properties.name, false);
+    }
+
+    
     function mapLoad() {
        
+        $.ajax({
+            type: "GET",
+            url: "/api/MapVote",
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                // given the data update each map area and change the fill color for each of the area
+                mapVoteColorData = data;
+    
+                topoLayer.eachLayer(function (layer) {
+                    handleLayer(layer);
+                });
+            },
+            error: function (response) {
+                //$('#loaderImage' + currentChartId).hide();
+            }
+        });
+
         // create a map object and set the view to the coordinates 44,-31 with a zoom of 10
-        var map = L.map('map', { maxZoom: 8, minZoom: 5}),
-            topoLayer = new L.TopoJSON(),
-            $areaName = $('.areaname'),
-            colorScale = chroma
-                .scale(['#bdbdbd', '#bdbdbd'])
-                .domain([0,1]);
+        map = L.map('map', { maxZoom: 8, minZoom: 5, zoomControl: false, attributionControl: false });
+        map.setView([55.6600933, -6.2659008], 5);   
+        new L.control.zoom({ position: 'topright' }).addTo(map);
 
-        map.setView([55.6600933, -6.2659008], 5);
-
-        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-            subdomains: 'abcd',
-            minZoom: 5,
-            maxZoom: 8
-        }).addTo(map);
-
-        //new L.control.zoom({ position: 'topright' }).addTo(map);
-
+        // create topoJson layers on the map
+        var topoLayer = new L.TopoJSON();
         $.getJSON('/Content/map.topo.json').done(addTopoData);
         function addTopoData(topoData) {
             topoLayer.addData(topoData);
@@ -369,153 +471,96 @@
             topoLayer.eachLayer(handleLayer);
         }
 
-        function handleLayer(layer) {
-            var randomValue = Math.random(),
-              fillColor = colorScale(randomValue).hex();
-
-            layer.setStyle({
-                fillColor: fillColor,
-                fillOpacity: 1,
-                color: '#555',
-                weight: 1,
-                opacity: 0.5
-            });
-
-
-            layer.on({
-                click: pinLayer,
-                mouseover: enterLayer,
-                //mouseout: leaveLayer
-            });
-        }
-
-        info = L.control({position: 'bottomleft'});
-
-        info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        // add an info box to the map
+        mapInfoBox = L.control({position: 'topleft'});
+        mapInfoBox.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'mapInfoBox'); // create a div with a class "mapInfoBox"
             this.update();
             return this._div;
         };
 
         // method that we will use to update the control based on feature properties passed
-        info.update = function (name) {
+        mapInfoBox.update = function (name, showResetButton) {
 
             if (name) {
-                this._div.innerHTML = '<h4>' + name + '</h4>' + '<br/>Reset to <button class="infoButton" onclick="resetToDefaultArea()">Great Britain</button><br/><br/>';
+                this._div.innerHTML = '<h4>' + name + '</h4>';
+
+                if (showResetButton)
+                    this._div.innerHTML += '<br/>Reset to <button class="infoButton" onclick="resetToDefaultMap()">Great Britain</button><br/><br/>';
             }
             else {
                 this._div.innerHTML = '<h4>Great Britain</h4><br/>';
             }
-            this._div.innerHTML += '<br/><p style="font-text:smaller">Hover over to update chart on the left. Click on an area to explore all charts</p>'
+            this._div.innerHTML += '<br/><p style="font-text:smaller">Click on an area to explore charts</p>';
         };
 
-        info.addTo(map);
-
-        function enterLayer(e) {
-            var layer = e.target;
-
-            if (!isLayerPinned) {
-
-
-                if (selectedLayer) {
-                    unselectLayer(selectedLayer)
-                }
-
-                layer.setStyle({
-                    fillColor: '#800026',
-                    color: 'white',
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.7
-                });
-
-                if (!L.Browser.ie && !L.Browser.opera) {
-                    layer.bringToFront();
-                }
-                info.update(layer.feature.properties.name);
-                selectArea(layer.feature.properties.geoshapeid, layer.feature.properties.name)
-
-                selectedLayer = layer;
-            }
-            //else {
-                //console.log("We have a pinned layer")
-            //}
-
-        }
-
-        
-
-
-        function pinLayer(e)
-        {
-            if (isLayerPinned && pinnedLayer == e.target) {
-                //console.log("pinLayer: unpinned the existing layer")
-                isLayerPinned = false;
-
-                pinnedLayer = null;
-            }
-            else {
-                //console.log("pinLayer: we have a new layer to be pinned")
-                isLayerPinned = true;
-                pinnedLayer = e.target;
-            }
-        }
-
-
-
-        function selectArea(id, name) {
-            $('#selectedAreaName').val(name);
-            $('#selectedAreaId').val(id).change();
-        }
+        mapInfoBox.addTo(map);
     }
 
-    function chartLoad(locationId)
+    function chartClean()
     {
+        d3.select('#chart' + currentChartId).selectAll("*").remove();
+        d3.select('#chart' + currentChartId).append('svg');
+    }
+
+    function chartOnPreLoad() {
+        $('#chart-footer' + currentChartId).hide();
+        $('#loaderImage' + currentChartId).show();
+    }
+
+    function chartOnAfterLoad() {
+        $('#chart-footer' + currentChartId).show();
+        $('#loaderImage' + currentChartId).hide();
+    }
+
+    function chartLoad() {
         var customNoDataText = "No data available for " + $('#selectedAreaName').val()
 
         var currentChartInfo = currentChart[currentChartId];
         chartOnPreLoad();
+
         $.ajax({
             type: "GET",
             url: currentChartInfo.api,
-            data: {'id':locationId},
+            data: { 'id': selectedAreaId },
             cache: false,
             dataType: 'json',
             success: function (data) {
-                chartOnAfterLoad()
-
                 var chartData = null;
 
-                if (currentChartInfo.code == "netVote") 
-                {
-                    chartData = NetVoteChartData(data, currentChartInfo);
+                if (currentChartInfo.code == "netVote") {
+                    chartData = prepareNetVoteData(data, currentChartInfo);
                 }
-                else if (currentChartInfo.code == "netVoteTrend")
-                {
-                    chartData = NetVoteTrendChartData(data, currentChartInfo);
+                else if (currentChartInfo.code == "netVoteTrend") {
+                    chartData = prepareNetVoteTrendData(data, currentChartInfo);
                 }
                 else if (currentChartInfo.code == "netVotePercent") {
-                    chartData = NetVotePercentChartData(data);
+                    chartData = prepareNetVotePercentData(data);
                 }
-                else if (currentChartInfo.code == "swing") {
-                    chartData = SwingChartData(data)
+                else if (currentChartInfo.code == "sentiment") {
+                    chartData = prepareSentimentData(data);
                 }
+                //else if (currentChartInfo.code == "swing") {
+                //chartData = SwingChartData(data)
+                //}
 
-                if (chartData[0].values.length > 0) 
-                {
+                if (chartData) {// && chartData[0].values.length > 0) {
                     if (currentChartInfo.type == "bar") {
-                        drawD3BarChartObject(chartData, currentChartInfo)
+                        drawBarChart(chartData, currentChartInfo)
                     }
                     else if (currentChartInfo.type == "trend") {
-                        drawD3LineChartObject(chartData)
+                        drawLineChart(chartData, currentChartInfo)
                     }
-                    else if (currentChartInfo.type == "swing") {
-                        // swing
-                        drawD3SwingChartObject(chartData)
+                    else if (currentChartInfo.type === "multibar") {
+                        drawMultiBarChart(chartData, currentChartInfo)
                     }
+                    //else if (currentChartInfo.type == "swing") {
+                    // swing
+                    //drawD3SwingChartObject(chartData)
+                    //}
                 }
                 else {
-                    //delete all chart related objects
+                    //delete any chart related objects
                     d3.select('#chart' + currentChartId).selectAll("*").remove()
 
                     //create a new "chart" with No Data text message
@@ -528,73 +573,108 @@
                     .style("text-anchor", "middle")
                     .text(customNoDataText);
                 }
-            
+
+                chartOnAfterLoad()
             },
             error: function (response) {
-                $('#loaderImage' + currentChartId ).hide();
+                $('#loaderImage' + currentChartId).hide();
             }
         });
-    }
+    };
 
-    function drawD3BarChartObject(chartData, currentChartInfo)
-    {
+
+    function drawMultiBarChart(chartData, currentChartInfo) {
+        var formatter = d3.format(",d"),
+            dataFormat = ",.f";
+
+        nv.addGraph(function () {
+            var chart = nv.models.multiBarHorizontalChart()
+                .x(function (d) { return d[0] })
+                .y(function (d) { return d[1] })
+                .valueFormat(function (d) { return formatter(d) })
+                //.margin({ top: 30, right: 20, bottom: 50, left: 175 })
+                .showValues(true)           //Show bar value next to each bar.
+                .tooltips(false)             //Show tooltips on hover.
+                .showControls(false);        //Allow user to switch between "Grouped" and "Stacked" mode.
+
+            chart.xAxis
+                .axisLabel(currentChartInfo.xaxis)
+
+            chart.yAxis
+                .axisLabel(currentChartInfo.yaxis)
+                .tickFormat(d3.format(',d'));
+                //.tickFormat(function (d) { return formatter(d); })
+
+            d3.select('#chart' + currentChartId + ' svg')
+                .datum(chartData[0].values)
+                .transition().duration(500)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+    };
+
+    function drawBarChart(chartData, currentChartInfo) {
+        var formatter, dataFormat;
+
         if (currentChartInfo.code == "netVote") {
-            var formatter = d3.format(",d")
+            formatter = d3.format(",d");
+            dataFormat = ",.f";
         }
         else if (currentChartInfo.code == "netVotePercent") {
-            var formatter = d3.format(",.2%");
+            formatter = d3.format(",.2%");
+            dataFormat = "%";
         }
 
-        nv.addGraph(function(){
+        nv.addGraph(function () {
             generate:
                 var chart = nv.models.discreteBarChart()
                     .x(function (d) { return d.label })
                     .y(function (d) { return d.value })
-                    .valueFormat(function(d) { return formatter(d)})
+                    .valueFormat(function (d) { return formatter(d) })
                     .staggerLabels(true)
                     .showValues(true)
                     .tooltips(false);
 
+            chart.color(function (d) { return d.color });
 
+            chart.xAxis.axisLabel(currentChartInfo.xaxis);
+
+            // generate a new ticks on the y axis
             var tmpTicks = [[]];
             if (currentChartInfo.code == "netVote") {
-                chart.yAxis.axisLabel("Number of Tweets")
-
-
                 var closest10N = Math.pow(10, Math.floor(Math.log(chartData[0].maxValue) / Math.LN10));   // find the closest value 10^N to the given Max Value
 
-                var maxTickValue = 0
-                if ((chartData[0].maxValue - closest10N) / closest10N <= 0.5)   // additional logic to improve how values are spread on the chart
-                {
-                    maxTickValue = closest10N + Math.pow(10, Math.floor(Math.log(chartData[0].maxValue - closest10N) / Math.LN10))   
+                var maxTickValue = 0;
+                if ((chartData[0].maxValue - closest10N) / closest10N <= 0.5) {  // additional logic to improve how values are spread on the chart
+                    maxTickValue = closest10N + Math.pow(10, Math.floor(Math.log(chartData[0].maxValue - closest10N) / Math.LN10));
                 }
-                else
-                {
-                    maxTickValue = 5 * closest10N
+                else {
+                    maxTickValue = 5 * closest10N;
                 }
 
                 // generate new tick values
-                var maxTickValueCount = 5
-                var tickVal = 0
-                for (tickValCount = 0; tickValCount < maxTickValueCount; tickValCount++)
-                {
-                    tickVal += maxTickValue / maxTickValueCount
-                    tmpTicks[0].push(tickVal)
+                var maxTickValueCount = 5;
+                var tickVal = 0;
+                for (tickValCount = 0; tickValCount < maxTickValueCount; tickValCount++) {
+                    tickVal += maxTickValue / maxTickValueCount;
+                    tmpTicks[0].push(tickVal);
                 }
-                
+
             }
             else if (currentChartInfo.code == "netVotePercent") {
-                chart.yAxis.axisLabel("Percentage of Net Voting Sentiment (%)")
-
                 tmpTicks = [[0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.7, 0.8, 0.9, 1]];
             }
 
             // use generated tickValues on yAxis            
             chart.yAxis
-                .tickFormat(function (d) { return d3.format(currentChartInfo.dataFormat)(d); })
-                .tickValues([].concat.apply([], tmpTicks));
+                .tickFormat(function (d) { return d3.format(dataFormat)(d); })
+                .tickValues([].concat.apply([], tmpTicks))
+                .axisLabel(currentChartInfo.yaxis);
 
-            d3.select('#chart'+ currentChartId +' svg')
+            d3.select('#chart' + currentChartId + ' svg')
               .datum(chartData)
               .transition().duration(500)
               .call(chart)
@@ -604,11 +684,9 @@
 
             return chart;
         })
-    }
+    };
 
-    function drawD3LineChartObject(chartData)
-    {
-
+    function drawLineChart(chartData, currentChartInfo) {
         nv.addGraph(function () {
             generate:
                 var chart = nv.models.lineChart()
@@ -617,105 +695,95 @@
                     .options({
                         transitionDuration: 300,
                         useInteractiveGuideline: true
-                    })
-                    
-            
+                    });
+
             var tmpTickDates = chartData[0].values.map(function (e) { return e.values.map(function (d) { return d[0]; }); });
 
             chart.xAxis
                 .showMaxMin(true)
                 .tickFormat(function (d) { return d3.time.format('%d/%m')(new Date(d)); })
                 .tickValues([].concat.apply([], tmpTickDates))
-                .rotateLabels(-45);
-
+                .rotateLabels(-45)
+                .axisLabel(currentChartInfo.xaxis);
 
 
             var tmpTicks = [[]];
-            var valueRange = chartData[0].maxValue - chartData[0].minValue
+            var valueRange = chartData[0].maxValue - chartData[0].minValue;
 
             // generate new tick values
-            var maxTickValueCount = 5
-            var tickVal = chartData[0].minValue
-            for (tickValCount = 0; tickValCount < maxTickValueCount - 1; tickValCount++)
-            {
-                tickVal += Math.round(valueRange / maxTickValueCount)
-                tmpTicks[0].push(tickVal)
+            var maxTickValueCount = 5;
+            var tickVal = chartData[0].minValue;
+            for (tickValCount = 0; tickValCount < maxTickValueCount - 1; tickValCount++) {
+                tickVal += Math.round(valueRange / maxTickValueCount);
+                tmpTicks[0].push(tickVal);
             }
-                
+
             chart.yAxis
                 .tickFormat(d3.format(',.1'))
-                .tickValues([].concat.apply([], tmpTicks))          // use generated tickValues on xAxis            
-                .axisLabel("Number of Tweets")
+                .tickValues([].concat.apply([], tmpTicks))                     
+                .axisLabel(currentChartInfo.yaxis);
 
 
             d3.select('#chart' + currentChartId + ' svg')
               .datum(chartData[0].values)
               .transition().duration(500)
-              .call(chart)
-            ;
+              .call(chart);
 
             nv.utils.windowResize(function () { chart.update() });
 
             return chart;
         })
-    }
+    };
 
-    function drawD3SwingChartObject(chartData) {
-        generate:
-            nv.addGraph(function () {
-                chart = nv.models.parallelCoordinates()
-                    .dimensions(["Original Net Voting Sentiment", "To Date Net Voting Sentiment"]);
-                // make all lines the same color like this
-                //chart.color(['steelblue']);
-                d3.select('#chart' + currentChartId + ' svg')
-                        .datum(chartData)
-                        .call(chart);
-                nv.utils.windowResize(chart.update);
-                return chart;
-            })
-    }
+    //function drawD3SwingChartObject(chartData) {
+    //    generate:
+    //        nv.addGraph(function () {
+    //            chart = nv.models.parallelCoordinates()
+    //                .dimensions(["Original Net Voting Sentiment", "To Date Net Voting Sentiment"]);
+    //            // make all lines the same color like this
+    //            //chart.color(['steelblue']);
+    //            d3.select('#chart' + currentChartId + ' svg')
+    //                    .datum(chartData)
+    //                    .call(chart);
+    //            nv.utils.windowResize(chart.update);
+    //            return chart;
+    //        })
+    //}
 
-    function NetVotePercentChartData(data) {
+    function prepareNetVotePercentData(data) {
+        updateLivestamp(data.lastUpdated)
 
         if (data.data == null) {
-            return [{
-                values: [],
-                key: "NetVotePercentChart"
-            }];
+            return null;
         }
 
-        updateLivestamp(data.lastUpdated)
         dataValues = data.data;
 
         var vals = [];
         for (var i in dataValues) {
-            vals.push({ label: dataValues[i].name, value: dataValues[i].percent });
+            vals.push({ label: dataValues[i].name, value: dataValues[i].percent, color: dataValues[i].color });
         }
         return [{
             values: vals,
             key: "NetVotePercentChart"
         }];
-    }
-    function NetVoteChartData(data, currentChartInfo) {
+    };
+
+    function prepareNetVoteData(data, currentChartInfo) {
         updateLivestamp(data.lastUpdated)
-        
-        if (data.data == null)
-        {
-            return [{
-                values: [],
-                key: "NetVoteChart",
-                minValue: 0,
-                maxValue: 0
-            }];
+
+        if (data.data == null) {
+            return null;
         }
 
         dataValues = data.data;
-        
+
         var vals = [];
         var min = dataValues[0].count
         var max = dataValues[0].count;
-        for (var i in dataValues) {
+        var colors = [];
 
+        for (var i in dataValues) {
             if (dataValues[i].count < min) {
                 min = dataValues[i].count
             }
@@ -723,47 +791,38 @@
             if (dataValues[i].count > max) {
                 max = dataValues[i].count
             }
-            vals.push({ label: dataValues[i].name, value: dataValues[i].count });
-            
-
+            vals.push({ label: dataValues[i].name, value: dataValues[i].count, color: dataValues[i].color });
         }
 
-        
         return [{
             values: vals,
             key: "NetVoteChart",
             minValue: min,
             maxValue: max
         }];
+    };
 
-        
-    }
-
-    function NetVoteTrendChartData(data)
-    {
-
-        if (data.data == null) {
-            return [{
-                values: [],
-                key: "TrendChart",
-                minValue: 0,
-                maxValue: 0
-            }];
-        }
+    function prepareNetVoteTrendData(data) {
 
         updateLivestamp(data.lastUpdated)
+
+        if (data.data == null) {
+            return null;
+        }
+        
         dataValues = data.data
 
-        minValue = dataValues[0].values[0][1]
-        maxValue = dataValues[0].values[0][1]
+        minValue = dataValues[0].values[0][1];
+        maxValue = dataValues[0].values[0][1];
+
         for (i in dataValues) {
-            var seriesValues = dataValues[i]
+            var seriesValues = dataValues[i];
             for (j in seriesValues.values) {
-                if (seriesValues.values[j][1] > maxValue){
-                    maxValue = seriesValues.values[j][1]
+                if (seriesValues.values[j][1] > maxValue) {
+                    maxValue = seriesValues.values[j][1];
                 }
-                if (minValue > seriesValues.values[j][1]){
-                    minValue = seriesValues.values[j][1]
+                if (minValue > seriesValues.values[j][1]) {
+                    minValue = seriesValues.values[j][1];
                 }
             }
         }
@@ -773,9 +832,43 @@
             minValue: minValue,
             maxValue: maxValue
         }];
-    }
+    };
 
-    function SwingChartData(data) {
+    
+    function prepareSentimentData(data) {
+
+        updateLivestamp(data.lastUpdated);
+        if (data.data == null) {
+            return null;
+        }
+        
+        dataValues = data.data;
+
+        //minValue = dataValues[0].values[0][1]
+        //maxValue = dataValues[0].values[0][1]
+
+        //console.log(dataValues)
+
+        //for (i in dataValues) {
+        //    var seriesValues = dataValues[i]
+        //    for (j in seriesValues.values) {
+        //        if (seriesValues.values[j][1] > maxValue) {
+        //            maxValue = seriesValues.values[j][1]
+        //        }
+        //        if (minValue > seriesValues.values[j][1]) {
+        //            minValue = seriesValues.values[j][1]
+        //        }
+        //    }
+        //}
+        return [{
+            values: dataValues,
+            key: "MultiBarChart",
+            minValue: 0,//minValue,
+            maxValue: 0//maxValue
+        }];
+    };
+
+    //function SwingChartData(data) {
         //for (var key in data) {
         //    if (data.hasOwnProperty(key)) {
         //        updateLivestamp(key)
@@ -792,44 +885,6 @@
         //    values: vals,
         //    key: "SwingChart"
         //}];
-
-        return [
-        {
-            "name": "Lab",
-            "Original Net Voting Sentiment": "150",
-            "To Date Net Voting Sentiment": "220"
-        },
-        {
-            "name": "Snp",
-            "Original Net Voting Sentiment": "15",
-            "To Date Net Voting Sentiment": "23"
-        },
-        {
-            "name": "Con",
-            "Original Net Voting Sentiment": "178",
-            "To Date Net Voting Sentiment": "200"
-        },
-        {
-            "name": "LD",
-            "Original Net Voting Sentiment": "55",
-            "To Date Net Voting Sentiment": "22"
-        },
-        {
-            "name": "Grn",
-            "Original Net Voting Sentiment": "3",
-            "To Date Net Voting Sentiment": "5"
-        },
-        {
-            "name": "Ukip",
-            "Original Net Voting Sentiment": "2",
-            "To Date Net Voting Sentiment": "-5"
-        }
-        ]
-
-    }
-
-
-
-
+    //}
 
 </script>

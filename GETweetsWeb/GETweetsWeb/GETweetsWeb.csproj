@@ -131,16 +131,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MapVoteController.cs" />
     <Compile Include="Controllers\NetVoteController.cs" />
+    <Compile Include="Controllers\SentimentVoteController.cs" />
     <Compile Include="Controllers\SwingController.cs" />
     <Compile Include="Controllers\NetVoteTrendController.cs" />
-    <Compile Include="DummyTweet.cs">
-      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="GeoShape.cs">
       <DependentUpon>GETweetWebEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="GETweetMLService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NetVotePercentController.cs" />
     <Compile Include="GETweetWebEntities.Context.cs">
@@ -163,17 +161,24 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\PoliticalParty.cs" />
-    <Compile Include="Models\PredictionResult.cs" />
-    <Compile Include="Models\Tweet.cs" />
+    <Compile Include="Models\Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="VoteMap.cs">
+      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VoteSentiment.cs">
+      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VoteTrend.cs">
+      <DependentUpon>GETweetWebEntities.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\Logo.png" />
-    <Content Include="Content\images\pin.png" />
     <Content Include="Content\nv.d3.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -220,7 +225,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

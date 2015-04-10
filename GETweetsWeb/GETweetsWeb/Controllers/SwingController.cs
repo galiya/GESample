@@ -25,23 +25,24 @@ namespace GETweetsWeb.Controllers
         [ResponseType(typeof(NetVoteData))]
         public NetVoteData Get(int? id = null)
         {
-            var mapLocationFilter = new MapLocation(id);
+            //var mapLocationFilter = new MapLocation(id);
 
-            var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);  //TODO: change
+            //var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);  //TODO: change
 
-            if (tweets.Count() == 0)
-            {
-                return null;
-            }
+            //if (tweets.Count() == 0)
+            //{
+            //    return null;
+            //}
 
-            var data = new List<TweetsByPartyCount>();
-            var dataGroup = from t in tweets group t by t.PoliticalParty into g select new { party = g.Key, count = g.Count() };
-            foreach (var item in dataGroup)
-            {
-                data.Add(new TweetsByPartyCount() { Name = item.party, Count = item.count });
-            }
+            //var data = new List<TweetsByPartyCount>();
+            //var dataGroup = from t in tweets group t by t.PoliticalParty into g select new { party = g.Key, count = g.Count() };
+            //foreach (var item in dataGroup)
+            //{
+            //    data.Add(new TweetsByPartyCount() { Name = item.party, Count = item.count });
+            //}
 
-            return new NetVoteData() { LastUpdated = DateTime.Now, Data = data };
+            //return new NetVoteData() { LastUpdated = DateTime.Now, Data = data };
+            return null;
         }
 
 

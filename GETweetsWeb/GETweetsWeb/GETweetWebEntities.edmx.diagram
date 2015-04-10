@@ -5,9 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0affde4df9524c04bd01221a4de348c1" Name="Diagram1">
-        <EntityTypeShape EntityType="ge15tweetsModel.DummyTweet" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="ge15tweetsModel.GeoShape" Width="1.5" PointX="0.75" PointY="1.125" />
-        <AssociationConnector Association="ge15tweetsModel.FK_DummyTweets_GeoShape" />
+        <EntityTypeShape EntityType="ge15tweetsModel.GeoShape" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="ge15tweetsModel.VoteMap" Width="1.5" PointX="3" PointY="7" />
+        <EntityTypeShape EntityType="ge15tweetsModel.VoteSentiment" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="ge15tweetsModel.VoteTrend" Width="1.5" PointX="3" PointY="4.125" />
+        <AssociationConnector Association="ge15tweetsModel.FK_VoteMap_GeoShape" />
+        <AssociationConnector Association="ge15tweetsModel.FK_VoteSentiment_GeoShape" />
+        <AssociationConnector Association="ge15tweetsModel.FK_VoteTrend_GeoShape" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

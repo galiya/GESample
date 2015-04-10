@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace GETweetsWeb.Controllers
 {
     public class HomeController : Controller
@@ -12,8 +13,7 @@ namespace GETweetsWeb.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
-
     }
 }

@@ -16,13 +16,16 @@ namespace GETweetsWeb
     {
         public GeoShape()
         {
-            this.DummyTweets = new HashSet<DummyTweet>();
+            this.VoteMaps = new HashSet<VoteMap>();
+            this.VoteSentiments = new HashSet<VoteSentiment>();
+            this.VoteTrends = new HashSet<VoteTrend>();
         }
     
         public int GeoShapeId { get; set; }
         public string Name { get; set; }
-        public Nullable<int> PolygonId { get; set; }
     
-        public virtual ICollection<DummyTweet> DummyTweets { get; set; }
+        public virtual ICollection<VoteMap> VoteMaps { get; set; }
+        public virtual ICollection<VoteSentiment> VoteSentiments { get; set; }
+        public virtual ICollection<VoteTrend> VoteTrends { get; set; }
     }
 }

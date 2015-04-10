@@ -25,34 +25,31 @@ namespace GETweetsWeb.Controllers
         [ResponseType(typeof(NetVotePercentData))]
         public NetVotePercentData Get(int? id = null)
         {
-            var mapLocationFilter = new MapLocation(id);
+            var netVote = repository.GetNetVoteByLocation(id);
+            var lastUpdated = repository.GetNetVoteTimestamp();
 
-            var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);  //TODO: change
-
-            if (tweets.Count() == 0)
+            if (netVote.Count() == 0)
             {
-                return new NetVotePercentData() { LastUpdated = DateTime.Now, Data = null };
+                return new NetVotePercentData() { LastUpdated = lastUpdated, Data = null };
             }
 
-            var data = new List<TweetsByPartyPercent>();
-            var dataGroup = from t in tweets group t by t.PoliticalParty into g orderby g.Key select new { party = g.Key, count = g.Count() };
+            var data = new List<NetVotePercentModel>();
+            var dataGroup = from t in netVote group t by t.Party into g orderby g.Key select new { party = g.Key, count = g.Sum(x => x.PositiveCount) };
 
             var sum = (decimal)dataGroup.Select(r => r.count).Sum();
 
             var totalsWithPercentage = dataGroup.Select(r => new {
                 party = r.party,
-                percentage = sum != 0 ? Math.Round((r.count / sum), 4) : 0
+                percentage = sum != 0 ? Math.Round((r.count.Value / sum), 4) : 0
             });
-
-
 
             foreach (var item in totalsWithPercentage)
             {
                 var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.party.ToLower()).FirstOrDefault();
-                data.Add(new TweetsByPartyPercent() { Name = party.Name, Percent = item.percentage });
+                data.Add(new NetVotePercentModel() { Name = party.Name, Percent = item.percentage, Color = party.Color, Order = party.Order });
             }
 
-            return new NetVotePercentData() { LastUpdated = DateTime.Now, Data = data };
+            return new NetVotePercentData() { LastUpdated = lastUpdated, Data = data.OrderBy(d => d.Order).ToList() };
         }
 
         

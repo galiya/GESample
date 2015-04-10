@@ -25,7 +25,9 @@ namespace GETweetsWeb
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DummyTweet> DummyTweets { get; set; }
         public virtual DbSet<GeoShape> GeoShapes { get; set; }
+        public virtual DbSet<VoteMap> VoteMaps { get; set; }
+        public virtual DbSet<VoteSentiment> VoteSentiments { get; set; }
+        public virtual DbSet<VoteTrend> VoteTrends { get; set; }
     }
 }

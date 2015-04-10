@@ -24,26 +24,24 @@ namespace GETweetsWeb.Controllers
         [ResponseType(typeof(Models.NetVoteTrendData))]
         public NetVoteTrendData Get(int? id = null)
         {
+            var netVoteTrend = repository.GetNetVoteTrendByLocation(id);
+            var lastUpdated = repository.GetNetVoteTrendTimestamp();
 
-            var mapLocationFilter = new MapLocation(id);
-
-            var tweets = repository.GetTweetsByLocation(mapLocationFilter.Id);
-
-            if (tweets.Count() == 0)
+            if (netVoteTrend.Count() == 0)
             {
-                return new NetVoteTrendData() { LastUpdated = DateTime.Now, Data = null };
+                return new NetVoteTrendData() { LastUpdated = lastUpdated, Data = null };
             }
 
 
-            var dataGroup1 = tweets.Select(p => p.TweetDate).Distinct();
+            //var dataGroup1 = tweets.Select(p => p.TweetDate).Distinct();
 
-            var list = dataGroup1.ToList();
+            //var list = dataGroup1.ToList();
 
 
-            var dataGroup = from t in tweets
-                            group t by new { t.TweetDate, t.PoliticalParty } into g
-                            orderby g.Key.TweetDate, g.Key.PoliticalParty
-                            select new { date = g.Key.TweetDate, party = g.Key.PoliticalParty, count = g.Count() };
+            var dataGroup = from t in netVoteTrend
+                            group t by new { t.Date, t.Party } into g
+                            orderby g.Key.Date, g.Key.Party
+                            select new { date = g.Key.Date, party = g.Key.Party, count = g.Sum(x => x.Count)};
 
 
             var dataDict = new Dictionary<string, List<object[]>>();
@@ -52,7 +50,7 @@ namespace GETweetsWeb.Controllers
             {
                 
                 object[] values = new object[2];
-                values[0] = item.date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                values[0] = item.date.Value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
                 values[1] = item.count;
                 
                 if (dataDict.ContainsKey(item.party))
@@ -65,15 +63,16 @@ namespace GETweetsWeb.Controllers
                 }
             }
 
-            var data = new List<TweetsByDates>();
+            var data = new List<NetVoteTrendDataModel>();
 
             foreach (var item in dataDict)
             {
                 var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.Key.ToLower()).FirstOrDefault();
-                data.Add(new TweetsByDates() { Key = party.Name, Values = item.Value, Color = party.Color });
+                data.Add(new NetVoteTrendDataModel() { Key = party.Name, Values = item.Value, Color = party.Color, Order = party.Order });
             }
+            //data.OrderBy(x=> x.)
 
-            return new Models.NetVoteTrendData() { LastUpdated = DateTime.Now, Data = data };
+            return new Models.NetVoteTrendData() { LastUpdated = lastUpdated, Data = data.OrderBy(d => d.Order).ToList() };
         }
 
 

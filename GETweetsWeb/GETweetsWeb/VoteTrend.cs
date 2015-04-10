@@ -12,13 +12,13 @@ namespace GETweetsWeb
     using System;
     using System.Collections.Generic;
     
-    public partial class DummyTweet
+    public partial class VoteTrend
     {
-        public int LocalId { get; set; }
-        public System.DateTime TweetDate { get; set; }
-        public int Sentiment { get; set; }
-        public string PoliticalParty { get; set; }
-        public int GeoShapeId { get; set; }
+        public int VoteTrendId { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public string Party { get; set; }
+        public Nullable<int> Count { get; set; }
+        public Nullable<int> GeoShapeId { get; set; }
     
         public virtual GeoShape GeoShape { get; set; }
     }
