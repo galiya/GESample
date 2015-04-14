@@ -14,10 +14,11 @@ namespace GETweetsWeb
     
     public partial class VoteTrend
     {
-        public int VoteTrendId { get; set; }
+        public int Id { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string Party { get; set; }
         public Nullable<int> Count { get; set; }
+        public Nullable<int> NegCount { get; set; }
         public Nullable<int> GeoShapeId { get; set; }
     
         public virtual GeoShape GeoShape { get; set; }

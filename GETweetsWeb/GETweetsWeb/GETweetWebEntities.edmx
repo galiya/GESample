@@ -33,12 +33,13 @@
         </EntityType>
         <EntityType Name="VoteTrend">
           <Key>
-            <PropertyRef Name="VoteTrendId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="VoteTrendId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" />
           <Property Name="Party" Type="varchar" MaxLength="50" />
           <Property Name="Count" Type="int" />
+          <Property Name="NegCount" Type="int" />
           <Property Name="GeoShapeId" Type="int" />
         </EntityType>
         <Association Name="FK_VoteMap_GeoShape">
@@ -103,7 +104,6 @@
           <EntitySet Name="GeoShapes" EntityType="ge15tweetsModel.GeoShape" />
           <EntitySet Name="VoteMaps" EntityType="ge15tweetsModel.VoteMap" />
           <EntitySet Name="VoteSentiments" EntityType="ge15tweetsModel.VoteSentiment" />
-          <EntitySet Name="VoteTrends" EntityType="ge15tweetsModel.VoteTrend" />
           <AssociationSet Name="FK_VoteMap_GeoShape" Association="ge15tweetsModel.FK_VoteMap_GeoShape">
             <End Role="GeoShape" EntitySet="GeoShapes" />
             <End Role="VoteMap" EntitySet="VoteMaps" />
@@ -112,6 +112,7 @@
             <End Role="GeoShape" EntitySet="GeoShapes" />
             <End Role="VoteSentiment" EntitySet="VoteSentiments" />
           </AssociationSet>
+          <EntitySet Name="VoteTrends" EntityType="ge15tweetsModel.VoteTrend" />
           <AssociationSet Name="FK_VoteTrend_GeoShape" Association="ge15tweetsModel.FK_VoteTrend_GeoShape">
             <End Role="GeoShape" EntitySet="GeoShapes" />
             <End Role="VoteTrend" EntitySet="VoteTrends" />
@@ -148,17 +149,6 @@
           <Property Name="GeoShapeId" Type="Int32" />
           <NavigationProperty Name="GeoShape" Relationship="ge15tweetsModel.FK_VoteSentiment_GeoShape" FromRole="VoteSentiment" ToRole="GeoShape" />
         </EntityType>
-        <EntityType Name="VoteTrend">
-          <Key>
-            <PropertyRef Name="VoteTrendId" />
-          </Key>
-          <Property Name="VoteTrendId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="Party" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="GeoShapeId" Type="Int32" />
-          <NavigationProperty Name="GeoShape" Relationship="ge15tweetsModel.FK_VoteTrend_GeoShape" FromRole="VoteTrend" ToRole="GeoShape" />
-        </EntityType>
         <Association Name="FK_VoteMap_GeoShape">
           <End Type="ge15tweetsModel.GeoShape" Role="GeoShape" Multiplicity="0..1" />
           <End Type="ge15tweetsModel.VoteMap" Role="VoteMap" Multiplicity="*" />
@@ -183,6 +173,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VoteTrend">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Party" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="NegCount" Type="Int32" />
+          <Property Name="GeoShapeId" Type="Int32" />
+          <NavigationProperty Name="GeoShape" Relationship="ge15tweetsModel.FK_VoteTrend_GeoShape" FromRole="VoteTrend" ToRole="GeoShape" />
+        </EntityType>
         <Association Name="FK_VoteTrend_GeoShape">
           <End Type="ge15tweetsModel.GeoShape" Role="GeoShape" Multiplicity="0..1" />
           <End Type="ge15tweetsModel.VoteTrend" Role="VoteTrend" Multiplicity="*" />
@@ -234,10 +236,11 @@
             <EntityTypeMapping TypeName="ge15tweetsModel.VoteTrend">
               <MappingFragment StoreEntitySet="VoteTrend">
                 <ScalarProperty Name="GeoShapeId" ColumnName="GeoShapeId" />
+                <ScalarProperty Name="NegCount" ColumnName="NegCount" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Party" ColumnName="Party" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="VoteTrendId" ColumnName="VoteTrendId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

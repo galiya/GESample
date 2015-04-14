@@ -26,7 +26,7 @@ namespace GETweetsWeb.Models
 
             result.Add(new PoliticalParty() { Id = 2, Order = 2,
                 LongName = "Liberal Democrats", Name = "Lib Dem", 
-                Code = "ld", Color = "#FDBB30", Shades = new string[] { "#FDBB30", "#FDC659", "#FDCA63", "#FED582" } });
+                Code = "lib", Color = "#FDBB30", Shades = new string[] { "#FDBB30", "#FDC659", "#FDCA63", "#FED582" } });
 
             result.Add(new PoliticalParty() { Id = 1, Order = 3,
                 LongName = "Labour Party", Name = "Labour", Code = "lab",

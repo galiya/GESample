@@ -12,8 +12,6 @@ namespace GETweetsWeb
     {
         private GETweetsWebDB db = new GETweetsWebDB();
 
-        public string DefaultMapAreaShade = "#bdbdbd";
-
         public static string GetConnectionString()
         {
 
@@ -59,12 +57,17 @@ namespace GETweetsWeb
 
         public DateTime GetNetVoteTimestamp(){
 
-            var timestamp = (DateTime)HttpContext.Current.Cache.Get(cacheNetVoteUKTimestamp);
-            
-            if (timestamp == DateTime.MinValue)
+            var timestampCache = HttpContext.Current.Cache.Get(cacheNetVoteUKTimestamp);
+            DateTime timestamp;
+              
+            if (timestampCache == null)
             {
                 timestamp = DateTime.Now;
                 HttpContext.Current.Cache.Insert(cacheNetVoteUKTimestamp, timestamp, null, timestamp.AddMinutes(GetCacheRefreshIntervalMin()), System.Web.Caching.Cache.NoSlidingExpiration);
+            }
+            else
+            {
+                timestamp = (DateTime)timestampCache;
             }
             return timestamp;
         }
@@ -84,7 +87,7 @@ namespace GETweetsWeb
                         HttpContext.Current.Cache.Insert(cacheNetVoteUKTimestamp, timestamp, null, timestamp.AddMinutes(GetCacheRefreshIntervalMin()), System.Web.Caching.Cache.NoSlidingExpiration);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return null;
                 }
@@ -120,11 +123,17 @@ namespace GETweetsWeb
         public DateTime GetNetVoteTrendTimestamp()
         {
 
-            var timestamp = (DateTime)HttpContext.Current.Cache.Get(cacheNetVoteTrendUKTimestamp);
-            if (timestamp == DateTime.MinValue)
+            var timestampCache = HttpContext.Current.Cache.Get(cacheNetVoteTrendUKTimestamp);
+            DateTime timestamp;
+              
+            if (timestampCache == null)
             {
                 timestamp = DateTime.Now;
                 HttpContext.Current.Cache.Insert(cacheNetVoteTrendUKTimestamp, timestamp, null, timestamp.AddMinutes(GetCacheRefreshIntervalMin()), System.Web.Caching.Cache.NoSlidingExpiration);
+            }
+            else
+            {
+                timestamp = (DateTime)timestampCache;
             }
             return timestamp;
         }
@@ -145,7 +154,7 @@ namespace GETweetsWeb
                         HttpContext.Current.Cache.Insert(cacheNetVoteTrendUKTimestamp, timestamp, null, timestamp.AddMinutes(GetCacheRefreshIntervalMin()), System.Web.Caching.Cache.NoSlidingExpiration);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return null;
                 }
@@ -232,7 +241,7 @@ namespace GETweetsWeb
                 {
                     using (var db = new GETweetsWebDB(GetConnectionString()))
                     {
-                        mapVote = db.VoteMaps.ToList();
+                        mapVote = db.VoteMaps.Where(x => x.WinningDiff > 0).ToList();
                         var timestamp = DateTime.Now;
 
                         HttpContext.Current.Cache.Insert(cacheMapVote, mapVote, null, timestamp.AddMinutes(GetCacheRefreshIntervalMin()), System.Web.Caching.Cache.NoSlidingExpiration);
@@ -254,7 +263,7 @@ namespace GETweetsWeb
 
                     foreach (var item in mapVote)
                     {
-                        var color = DefaultMapAreaShade;
+                        var color = "";
 
                         var itemParty = party.Where(p => p.Code.ToLower() == item.Party.ToLower()).FirstOrDefault();
                         if (itemParty != null)

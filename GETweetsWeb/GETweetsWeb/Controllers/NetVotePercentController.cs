@@ -34,7 +34,7 @@ namespace GETweetsWeb.Controllers
             }
 
             var data = new List<NetVotePercentModel>();
-            var dataGroup = from t in netVote group t by t.Party into g orderby g.Key select new { party = g.Key, count = g.Sum(x => x.PositiveCount) };
+            var dataGroup = from t in netVote where t.PositiveCount > 0 group t by t.Party into g orderby g.Key select new { party = g.Key, count = g.Sum(x => x.PositiveCount) };
 
             var sum = (decimal)dataGroup.Select(r => r.count).Sum();
 

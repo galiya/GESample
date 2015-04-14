@@ -26,21 +26,16 @@ namespace GETweetsWeb.Controllers
             var data = new List<SentimentVoteDataModel>();
             var dataGroup = from t in sentimentVote group t by t.Party into g orderby g.Key
                             select new { party = g.Key, posCount = g.Sum(x => x.PositiveCount), negCount = g.Sum(x => x.NegativeCount) };
-            //foreach (var item in dataGroup)
-            //{
-            //    var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.party.ToLower()).FirstOrDefault();
-            //    data.Add(new SentimentVoteModel() { Name = party.Name, PositiveCount = item.posCount.Value, NegativeCount = item.negCount.Value, Color = party.Color });
-            //}
-
+            
 
             /*----*/
             var dataDict = new Dictionary<string, List<object[]>>();
 
-            var nameSeries1= "Positive";
-            var nameSeries2 = "Negative";
+            var nameSeries1 = "Negative";
+            var nameSeries2= "Positive";
 
-            var colorSeries1 = "#bdbdbd";
-            var colorSeries2 = "#636363";
+            var colorSeries1 = "#ff6633";
+            var colorSeries2 = "#66ff33";
 
             foreach (var item in dataGroup)
             {
@@ -51,12 +46,12 @@ namespace GETweetsWeb.Controllers
                 object[] series2 = new object[3];
 
                 series1[0] = party.Name;
-                series1[1] = item.posCount;
+                series1[1] = item.negCount;
                 series1[2] = party.Order;
 
                 series2[0] = party.Name;
-                series2[1] = item.negCount;
-                series1[2] = party.Order;
+                series2[1] = item.posCount;
+                series2[2] = party.Order;
 
                 if (dataDict.ContainsKey(nameSeries1))
                 {

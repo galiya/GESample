@@ -22,9 +22,8 @@ namespace GETweetsWeb.Controllers
             var parties = PoliticalParty.GetList();
             foreach (var item in repository.GetMapVotePerParty())
             {
-                var resultShade = repository.DefaultMapAreaShade;
-                
-                if (item.Value != null)
+                var resultShade = "";
+                if (!String.IsNullOrWhiteSpace(item.Value))
                 {
                     resultShade = item.Value;
                         

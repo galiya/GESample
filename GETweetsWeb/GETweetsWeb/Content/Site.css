@@ -1,64 +1,479 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
+﻿
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
+/*.dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+
 input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+html{
+    height:100%; 
+} 
+
+body{
+    height:100%;
 }
 
-.chart {
-    margin-left: 50px;
-    margin-right: 50px;
+/*-----*/
+.headerDiv {
+    background-color: #f5f5f5;
+    height: 136px;
+    padding-top: 40px
 }
 
-.chart svg {
-    width: 100%;
-    min-height: 400px;
+@media (max-width: 1200px) {
+    .leftColumnImg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .headerDiv p.Title {
+        /*padding-top: 35px;*/
+    }
+
+    .headerAlign {
+        text-align: center;
+    }
+
+    .headerDiv span.TitlePref, .headerDiv span.TitleTwitter {
+        font-family: arial;
+        font-size: 1.2em;
+        line-height: 1em;
+        font-style: italic;
+        color: #505150;
+    }
+
+    .headerDiv span.TitleTwitter {
+        color: #00cafb !important;
+    }
+    
+    .headerDiv img.geLogo {
+        width: 100%;
+        height: 100%;
+    }
+
+    .headerDiv img.altiusLogo {
+        width: 100%;
+        height:100%;
+        background-position:right;
+    }
 }
 
-.chart-caption {
-  margin-left: 5%;
-  margin-right: 5%;
 
-  right: 15%;
-  left: 15%;
-  z-index: 10;
-  /*padding-top: 20px;*/
-  color: black;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+@media (min-width: 1201px) {
+    .leftColumnImg {
+        width: 480px;
+        height: 335px;
+    }
+
+    .headerDiv p.Title {
+        padding-top: 5px;
+    }
+
+    .headerDiv span.TitlePref {
+        font-family: arial;
+        font-size: 1.8em;
+        line-height: 2.2em;
+        font-style: italic;
+        color: #505150;
+    }
+
+    .headerDiv span.TitleTwitter {
+        font-family: arial;
+        font-size: 1.8em;
+        line-height: 2.2em;
+        font-style: italic;
+        color: #00cafb;
+    }
+
+    .headerDiv img.geLogo {
+        width: 194px;
+        height:75px;
+    }
+
+    .headerDiv img.altiusLogo {
+        width: 133px;
+        height:68px;
+        background-position:right;
+    }
 }
 
-.chart-caption h4 {
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+@media (max-width: 400px) {
+   
+    .carousel-inner{
+      width:100%;
+      min-height:  350px !important;
+    }
+
+    .chart {
+      margin-left: 0px;
+      margin-right: 0px;
+      min-height:  350px !important;
+    }
+
+    .chart svg {
+      min-height: 320px !important;
+    }
+
+    .chart-caption p {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .chart-footer-left{
+      margin-left: 10%;
+      text-align: left;
+      font-size: x-small;
+      float: left;
+    }
+
+    .chart-footer-right{
+      margin-left: 10%;
+      text-align: right;
+      font-size: x-small;
+      float: left;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .headerDiv span.TitlePref, .headerDiv span.TitleTwitter {
+        font-size: 0.8em !important;        
+    }
+
+    .separate, .separateLarge {
+        height: 20px;
+    }
+
+    .mapColumn, .chartColumn {
+        border-top: 1px solid #acacac;
+        border-bottom: 1px solid #acacac;
+        padding-top: 30px;
+        min-height: 100%;
+    }
+
+    .chart {
+        margin-left: 0px;
+        margin-right: 0px;
+        min-height: 480px;
+    }
+
+    .chart svg {
+        min-height: 450px;
+    }
+
+    #map{
+        height: 555px;
+        width: 100%;
+        background-color: white;
+    }
+
+    .socialIcons {
+        text-align: center;
+    }
+
+    .carousel-control .icon-prev, .carousel-control .icon-next {
+        margin-top: -60px;
+        top: 5%;
+    }
+    .carousel-control .icon-prev {
+        margin-left: -20px;
+    }
+
+    .carousel-control .icon-next {
+        margin-left: 10px;
+    }
+
+    .chart-footer-left{
+      margin-left: 10%;
+      text-align: left;
+      font-size: x-small;
+      float: left;
+    }
+
+    .chart-footer-right{
+      margin-left: 10%;
+      text-align: right;
+      font-size: x-small;
+      float: left;
+    }
     
 }
 
-.chart-footer {
-  
-  margin-right: 10%;
-  text-align: right;
-  font-size: x-small;
+
+@media (min-width: 640px){
+
+    .headerAlign {
+        text-align: right;
+    }
+
+    .separate {
+        /*height: 100px;*/
+        height: 70px;
+    }
+
+    .separateLarge{
+        /*height: 130px;*/
+        height: 90px;
+    }
+
+    .mapColumn, .chartColumn {
+        border-top: 1px solid #acacac;
+        border-bottom: 1px solid #acacac;
+        padding-top: 30px;
+        min-height: 605px;
+    }
+
+    .chart {
+        margin-left: 50px;
+        margin-right: 50px;
+        min-height: 480px;
+    }
+
+    .chart svg {
+        min-height: 450px;
+    }
+
+    #map{
+        height: 555px;
+        width: 450px;
+        background-color: white;
+    }
+
+    .carousel-inner{
+      width:100%;
+      min-height: 500px !important;
+    }
+
+    .carousel-control .icon-prev, .carousel-control .icon-next {
+        margin-top: -60px;
+        top: 5%;
+    }
+    .carousel-control .icon-prev {
+        margin-left: -50px;
+    }
+
+    .carousel-control .icon-next {
+        margin-left: 30px;
+    }
+
+    .chart-footer-left{
+      margin-left: 10%;
+      text-align: left;
+      font-size: x-small;
+      float: left;
+    }
+
+    .chart-footer-right{
+      margin-left: 20%;
+      text-align: right;
+      font-size: x-small;
+      float: left;
+    }
 }
+
+
+
+.headerDiv img.twitterLogo {
+    width: 27px;
+    height:23px;
+    vertical-align: baseline !important;
+}
+
+
+.leftColumn {
+    font-family: arial;
+    font-size: 1.6em;
+    line-height: 2em;
+    color: #00cafb;
+    /*border-top: 1px solid #acacac;*/
+    border-bottom: 1px solid #acacac;
+}
+
+
+.rightColumn {
+    font-family: arial;
+    font-size: 1.1em;
+    line-height: 2em;
+    color: #666666;
+    padding-bottom: 25px;
+}
+
+.rightColumn a{
+    color: #00cafb;
+    text-decoration: underline;
+}
+
+.description {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.instruction {
+    font-family: arial;
+    font-size: 1em;
+    color: #767676; /*#cccccc;*/
+}
+
+
+
+.mapRegionText {
+    font-family: arial;
+    font-size: 1.4em;
+    line-height: 1.5em;
+    color: #505150;
+}
+
+.mapRegionText button {
+    margin-right: 10px;
+}
+
+.chart-caption {
+    right: 15%;
+    left: 15%;
+    z-index: 10;
+
+    text-align: center;
+    font-family: arial;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    color: #505150;
+
+    padding-bottom: 20px;
+}
+
+.carousel-control.left, .carousel-control.right{ 
+    background: none !important; 
+    filter: none !important; 
+}
+
+.carousel-control .icon-prev, .carousel-control .icon-next {
+  color: #767676;
+  font-size: 60px;
+}
+
+p.moreInfoMenuTitle {
+    font-family: arial;
+    font-size: 1em !important;
+    color: #505150 !important;
+    padding-top: 10px;
+}
+
+p.moreInfoMenuTitle a {
+    font-family: arial;
+    font-size: 1.2em;
+    color: #505150;
+    text-decoration: none;
+}
+
+.moreInfoMenuTextHeader {
+    font-family: arial;
+    font-size: 1em;
+    line-height: 1.6em;
+    font-weight: bold;
+    color: #767676; /*#cccccc;*/
+}
+
+.moreInfoMenuTextBody, .moreInfoMenuTextBody p {
+    font-family: arial;
+    font-size: 1em;
+    line-height: 1.8em;
+    color: #767676; /*#cccccc;*/
+    padding-bottom: 10px;
+}
+
+.aboutIcon {
+    width: 50px;
+    height: 50px;
+}
+
+.footer {
+    background-color: #ffffff;
+    border-top: 1px solid #acacac;
+    height: 136px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.footer img.altiusIcon {
+    width: 39px;
+    height:40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.footer img.linkedinIcon, img.twitterIcon {
+    width: 41px;
+    height:40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.footer p.text {
+    font-family: arial;
+    font-size: 0.95em;
+    color: #767676; /*#cccccc;*/
+    text-align: center;
+    padding-top: 15px;
+}
+
+.footer p.text a {
+    text-decoration: none;
+    color: #767676; /*#cccccc;*/
+}
+/*-----*/
+
+
+/*======*/
+/* 5 column kayut with Bootstrap http://www.wearesicc.com/quick-tips-5-column-layout-with-twitter-bootstrap/*/
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-15 {
+    width: 100%;
+    float: left;
+}
+@media (min-width: 768px) {
+.col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+.panel-body .col-xs-15,
+.panel-body .col-sm-15,
+.panel-body .col-md-15,
+.panel-body .col-lg-15 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/*======*/
 
 .loaderImage {
   position: absolute; 
@@ -68,19 +483,8 @@ textarea {
 }
 
 
-*{
-    margin:0;
-    padding:0;
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    box-sizing:border-box;
-  }
 
-#map{
-    height: 500px;
-    width: 450px;
-    border: solid 1px white;
-}
+
 
 /*Required to resolve a conflict between nvd3 and Leaflet css files*/
 .leaflet-overlay-pane svg {
@@ -88,115 +492,38 @@ textarea {
     height: auto;
 }
 
-.areaname{
-    /*position: absolute;
-    top:2em;
-    right:1em;*/
-    z-index:6;
-    display:none;
-
-    border: solid 1px #CDCDCD;
-    border-radius: 3px;
-    background: #292929;
-    color: white;
-    font-family: sans-serif, Verdana;
-    font-size: smaller;
-    padding: 3px;
-  }
-
 .mapInfoBox {
     position: center;
-    
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
     background: white;
-    background: rgba(255,255,255,0.8);
+    /*background: rgba(255,255,255,0.8);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
+    border-radius: 5px;*/
     width: 180px;
     text-align: center;
 }
-.mapInfoBox h4 {
-    margin: 0 0 5px;
-    color: #777;
-}
-
-.mapInfoBox span {
-    font-size:smaller;
-}
 
 /*CUSTOMISE THE D3 CHART*/
-
-
-.nvd3 .nv-axis.nv-x {
+.nvd3 .nv-axis.nv-x{
   stroke-opacity: 0;
 }
-
-.trend .nvd3 .nv-axis.nv-x {
+.trend .nvd3 .nv-axis.nv-x, .multibar .nvd3 .nv-axis.nv-x {
   stroke-opacity: 1;
 }
-
 .nvd3.nv-noData {
-    font-size:larger !important;
-    font-weight: 200 !important;
+    font-family: arial !important;
+    font-size: 1.4em !important;
+    color: #767676 !important; /*#cccccc;*/
+    text-align: center !important;
+    font-weight: normal !important;
 }
 
-  /*.nvtooltip { position: absolute;
-background-color: rgba(255,255,255,1.0);
-padding: 1px;
-margin: -50px;}*/
-
-  /*.nvd3 line.nv-guideline { //* Hide the guideline 
-            display: none;
-            stroke-width: 0.0;
-        }*/
-        .nvd3 .nv-bars rect { /* fix the hover guideline to be snappy */
-            transition: fill-opacity 0ms linear;
-            -moz-transition: fill-opacity 0ms linear;
-            -webkit-transition: fill-opacity 0ms linear;
-        }
-        .nvd3 .nv-x .nv-axis .x-axis-tick-mark {
-            stroke: #000; /* black tick marks */
-        }
-        .nvd3 .nv-y .nv-axis .tick.zero line {
-            stroke: #000; /* black line for the x axis */
-        }
-
-/* CUSTOMISE THE CAROUSEL
--------------------------------------------------- */
-
-/* Carousel base class */
-/*.carousel {
-  margin-bottom: 50px;
-  margin-top:50px;
-}*/
-
-.carousel-inner{
-  width:100%;
-  min-height: 550px !important;
-
+.resetMap {
+    font-size: 0.75em;
+    color: #505150;
 }
 
-.carousel-control.left, .carousel-control.right{ 
-    background: none !important; 
-    filter: none !important; 
 
-}
-.carousel-control.left {
-    /*margin-left: -45px; 
-    margin-top:-15px;*/ 
-    
-    color: black;
-}
-.carousel-control.right {
-    /*margin-top:-15px; 
-    margin-right: -45px;*/ 
-    color: black;
-}
-
-.carousel-control .icon-prev, .carousel-control .icon-next {
-    top: 5%;
-
-}
 
 

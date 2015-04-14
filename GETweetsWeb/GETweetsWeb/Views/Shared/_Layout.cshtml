@@ -3,7 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 2015 General Elections</title>
+    <title>General Election 2015 Twitter Tracker</title>
+    <meta name="title" content="General Election 2015 Twitter Tracker" />
+    <meta name="keywords" content="general election 2015, May 2015, UK general election 2015, GE2015 Twitter Tracker" />
+    <meta name="description" content="Altius have created a machine-learnt solution for the General Election 2015 using Twitter Tracker, highlighting the voting preferences of Great Britain&#39;s Twitter users." />
+
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -14,8 +19,9 @@
 
 </head>
 <body>
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5214c43b2fd30ead" async="async"></script>
+    @*<div class="container body-content">*@
+    @RenderBody()
+    @*</div>*@
 </body>
 </html>

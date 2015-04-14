@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GETweetsWeb", "GETweetsWeb\GETweetsWeb.csproj", "{AD448B49-1CB7-4FE0-B19A-8E4E366B8FE8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{3A4ADCE5-8C93-4900-B627-E81B4DCB05C1}"
 	ProjectSection(SolutionItems) = preProject
 		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		..\..\..\Users\gxk\Downloads\ge2015twittertracker.azurewebsites.net.PublishSettings = ..\..\..\Users\gxk\Downloads\ge2015twittertracker.azurewebsites.net.PublishSettings
 		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
 	EndProjectSection
 EndProject

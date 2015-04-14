@@ -1,274 +1,353 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿
 @section scripts
 {
     @*<script type="text/javascript"  src="~/Scripts/jquery-1.10.2.js"></script>*@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
-    @*<script src="~/Scripts/d3/d3.js"></script>*@
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    
+    <!-- community version of nv.d3.js -->
     <link href="~/Content/nv.d3.min.css" rel="stylesheet">
     <script src="~/Scripts/nv.d3.min.js"></script>
-    
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
-    <script src="~/Scripts/moment.min.js"></script>
+    
+    <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/livestamp.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
 
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 }
 
-<div class="bs-docs-header" id="content" tabindex="-1">
-      <div class="container">
-        <h1><b>General Election 2015</b> voting preferences on Twitter</h1>
-          <p>The <b>General Election 2015</b> Twitter tracker, highlights the near real-time voting preferences of Great Britain’s Twitter users.</p>
-          <p>As we speak, millions of political conversations about The <b>General Election 2015</b> are happening on Twitter. Many of theses messages 
-            are offering influence and speculation on the outcome of Election Day on <b>Thursday 07 May 2015</b>. This raises two interesting questions - can voting 
-            preferences on Twitter help us better track and understand Great Britain's offline political preferences, and also, what is the importance of 
-            Twitter as a medium for political influence?</p>
-          <p>To help answer these questions and demonstrate the importance of Great Britain’s Twitter conversations, Altius have created a data driven and 
-            machine-learnt solution. Across the UK and at a given County level you can interact and track how popular a political party is on Twitter.</p>
-          <p>For more information on Altius and to find out how we created this solution please <a id="linkToContact" data-toggle="collapse" data-parent="#accordion" href="#section3"><b>scroll down</b>here</a></p>
-      </div>
+<div class="bs-docs-header headerDiv" id="content" tabindex="-1">
+    <div class="container">
+        <div class="col-md-3 col-xs-3">
+            <img class="geLogo" src="~/Content/images/ge2015_logo.png" />
+        </div>
+        <div class="col-md-6  col-xs-6 headerAlign">
+            <p class="Title">
+                <span class="TitlePref">VOTING PREFERENCES ON</span>
+                <span class="TitleTwitter">TWITTER</span>
+                <img class="twitterLogo" src="~/Content/images/twitter_bird_icon.png" />
+            </p>
+        </div>
+        <div class="col-md-3  col-xs-3 headerAlign">
+            <img class="altiusLogo" src="~/Content/images/ge2015_site_altius_logo.png" />
+        </div>
+    </div>
 </div>
-<div class="row">
-    <div class="col-md-7">
-        <div id="myCarousel" class="carousel slide" data-interval="false">
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2" ></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="item active">
-                    <div class="container">
-                        <div class="chart-caption">
-                            <h4>Voting Intention by Political Party</h4>
+
+<div class="container">
+    <div class="row description separate"></div>
+    <div class="row description">
+        <div class="col-md-5 col-xs-12">
+            <p class="leftColumn">#GE2015</p>
+            <p class="leftColumn">
+                The <b>General Election 2015</b> Twitter tracker, highlights the near real-time voting preferences of Great Britain’s Twitter users.
+            </p>
+            <img class="leftColumnImg" src="~/Content/images/ge2015_candidate_image.png" />
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6 col-xs-12">
+            <p class="rightColumn">
+                As we speak, millions of political conversations about The <b>General Election 2015</b> are happening on Twitter. Many of these messages
+                are offering influence and speculation on the outcome of Election Day on <b>Thursday 07 May 2015</b>. This raises two interesting questions - can voting
+                preferences on Twitter help us better track and understand Great Britain's offline political preferences, and also, what is the importance of
+                Twitter as a medium for political influence?
+            </p>
+            <p class="rightColumn">
+                To help answer these questions and demonstrate the importance of Great Britain’s Twitter conversations, Altius have created a data driven and
+                machine-learnt solution. Across the UK and at a given County level you can interact and track how popular a political party is on Twitter.
+            </p>
+            <p class="rightColumn">
+                For more information on Altius and to find out how we created this solution please
+                <a id="linkToContact" href="#aboutAltius">scroll down</a>
+            </p>
+        </div>
+    </div>
+    <div class="row description separateLarge"></div>
+    <div class="row">
+        <div class="col-md-5">
+            <p class="instruction">Click on an area on the map to explore</p>
+            <div class="mapColumn">
+                <input type="hidden" id="selectedAreaId" />
+                <input type="hidden" id="selectedAreaName" />
+                <div id="map" class="map"></div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <p class="instruction">Browse left or right using the arrows to see different charts</p>
+            <div class="chartColumn">
+
+                <div id="myCarousel" class="carousel slide" data-interval="false">
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="container">
+                                <div id="chart-caption0" class="chart-caption"><p>Voting Intention by Political Party</p></div>
+                                <img class="loaderImage" id="loaderImage0" src="~/Content/images/ajax-loader.gif" display="none" />
+                                <div id="chart0" class="chart">
+                                    <svg></svg>
+                                </div>
+                                <div id="chart-footer0">
+                                    <div class="chart-footer-left">
+                                        Data time period: 10/04/15 - present day
+                                    </div>
+                                    <div class="chart-footer-right">
+                                        Data last updated: <span id="pageUpdatedOn0" data-livestamp=""></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <img class="loaderImage" id="loaderImage0" src="~/Content/images/ajax-loader.gif" display="none" />
-                        <div id="chart0" class="chart">
-                            <svg></svg>
+                        <div class="item">
+                            <div class="container">
+                                <div id="chart-caption1" class="chart-caption"><p>Percentage of Total Voting Intention by Political Party (%)</p></div>
+                                <img class="loaderImage" id="loaderImage1" src="~/Content/images/ajax-loader.gif" display="none" />
+                                <div id="chart1" class="chart">
+                                    <svg></svg>
+                                </div>
+                                <div id="chart-footer1">
+                                    <div class="chart-footer-left">
+                                        Data time period: 10/04/15 - present day
+                                    </div>
+                                    <div class="chart-footer-right">
+                                        Data last updated: <span id="pageUpdatedOn1" data-livestamp=""></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="container">
+                                <div id="chart-caption2" class="chart-caption"><p>Voting Intention by Political Party to Date</p></div>
+                                <img class="loaderImage" id="loaderImage2" src="~/Content/images/ajax-loader.gif" display="none" />
+                                <div id="chart2" class="chart trend">
+                                    <svg></svg>
+                                </div>
+                                <div id="chart-footer2">
+                                    <div class="chart-footer-left">
+                                        Data time period: 10/04/15 - present day
+                                    </div>
+                                    <div class="chart-footer-right">
+                                        Data last updated: <span id="pageUpdatedOn2" data-livestamp=""></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="container">
+                                <div id="chart-caption3" class="chart-caption"><p>Sentiment of Total Tweets by Political Party</p></div>
+                                <img class="loaderImage" id="loaderImage3" src="~/Content/images/ajax-loader.gif" display="none" />
+                                <div id="chart3" class="chart multibar">
+                                    <svg></svg>
+                                </div>
+                                <div class="chart-footer" id="chart-footer3">
+                                    <div class="chart-footer-left">
+                                        Data time period: 10/04/15 - present day
+                                    </div>
+                                    <div class="chart-footer-right">
+                                        Data last updated: <span id="pageUpdatedOn3" data-livestamp=""></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="icon-prev"></span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="icon-next"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row separate"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p class="panel-title moreInfoMenuTitle">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#section1">How does it work?</a>
+                        </p>
+                    </div>
+                    <div id="section1" class="panel-collapse collapse">
+                        <div class="panel-body moreInfoMenuTextBody">
+                            <p>
+                                In near real-time we are extracting, classifying and then visualising the analysis of millions of tweets.
+                                To do this, there are three key elements which when connected allow us to complete a seamless end-to-end workflow using Microsoft
+                                Corporation’s Azure cloud based infrastructure and technology.
+                            </p>
+                            @*<ol>
+                                <li>Data Provision</li>
+                                <li>Classification & Analysis</li>
+                                <li>Front-end visualisation</li>
+                            </ol>*@
+                            <p class="moreInfoMenuTextHeader">Data Provision</p>
+                            <p> Azure SQL Database was carefully configured to extract, transform and load Twitter conversations.</p>
+                            <p class="moreInfoMenuTextHeader">Classification & Analysis</p>
+                            <p>
+                                Azure Machine Learning Studio, is used to train, build and execute the classification model that
+                                identifies voting preference and political party for each tweet in our SQL database. The updated data is then written back and stored on the Azure SQL 
+                                Database with the needed voting preference, political party and location assigned.
+                            </p>
+                            <p class="moreInfoMenuTextHeader">Front-end visualisation</p>
+                            <p>Customer webpage is created using open source javascript charting libraries. Web-service APIs call the necessary aggregated data from the database. The data is updated twice daily in order to reduce data processing costs.</p>
                             
                         </div>
-                        <div class="chart-footer" id="chart-footer0">
-                            Data last updated: <span id="pageUpdatedOn0" data-livestamp=""></span>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p class="panel-title moreInfoMenuTitle">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#section2">Frequently asked questions</a>
+                        </p>
+                    </div>
+                    <div id="section2" class="panel-collapse collapse">
+                        <div class="panel-body moreInfoMenuTextBody">
+                            <p class="moreInfoMenuTextHeader">Why county and not constituency mapping?</p>
+                            <p>
+                                Due to the nuances of Twitter usage, it is very difficult to map the General Election 2015 analysis to constituency level.
+                                Twitter users tend to not say exactly where they live or indeed our registered to vote. This is especially true in large cities such as
+                                London and Birmingham
+                            </p>
+                            <p>
+                                For the given constituencies that are housed within a relevant county, a county level view provides enough granularity to show how political parties
+                                fair in popularity and how this popularity may be reflected or influence the result of the General Election 2015
+                            </p>
+
+                            <p class="moreInfoMenuTextHeader">What does voting intention mean?</p>
+                            <p>Shows Twitter users' positive voting intention for a given political party. Thereby, suggesting Twitter users’ voting preferences by political party.</p>
+
+                            <p class="moreInfoMenuTextHeader">What does sentiment of total tweets mean?</p>
+                            <p>
+                                In at tweet, a Twitter user can communicate many positive and negative emotions and preferences towards political parties.
+                                Voting Sentiment is showing the total number of positive and negative tweets for each political party.
+                            </p>
+
+                            <p class="moreInfoMenuTextHeader">Is Twitter representative of the UK population?</p>
+                            <p>
+                                No, Twitter is not. Some key voter demographic groups are under or over represented on Twitter. However, Twitter is a key media channel
+                                for political parties - just look at the effort of political parties to reach out to voters through this medium of interaction.
+                            </p>
+
+                            <p class="moreInfoMenuTextHeader">What is machine learning?</p>
+                            <p>
+                                Machine learning is a key part of artificial intelligence which enables human insights and computers (machines) to do things such as play
+                                games and solve complex statistical-computation problems. Machine learning is normally used to solve very specific types of real world problems
+                                that can’t be solved using traditional Data Analysis or Business Intelligence. These problems can be broadly divided into three categories:
+                                Forecasting, Classification & Optimization. In this instance, we used machine learning to help train our model which classifies a
+                                Twitter user’s individual preferences towards the political parties.
+                            </p>
+
+                            <p class="moreInfoMenuTextHeader">Predictive analytics is all the rage, why did you not predict General Election 2015</p>
+                            <p>
+                                The Data Science Practice are experts in implementing predictive analytics for commercial advantage. However,
+                                we also know we have to take things step by step. Accurately predicting the outcome of each of 650 constituencies for a General Election
+                                using Twitter is not an easy task. Especially so, with the location mapping nuances referenced above – in 2019 perhaps!
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="item">
-                    <div class="container">
-                        <div class="chart-caption">
-                            <h4>Percentage of Total Voting Intention by Political Party (%)</h4>
-                        </div>
-                        <img class="loaderImage" id="loaderImage1" src="~/Content/images/ajax-loader.gif" display="none" />
-                        <div id="chart1" class="chart">
-                            <svg></svg>
-
-                        </div>
-                        <div class="chart-footer" id="chart-footer1">
-                            Data last updated: <span id="pageUpdatedOn1" data-livestamp=""></span>
-                        </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p class="panel-title moreInfoMenuTitle" >
+                            <a data-toggle="collapse" data-parent="#accordion" href="#section3">About Altius</a>
+                        </p>
                     </div>
-                </div>
-                <div class="item">
-                    <div class="container">
-                        <div class="chart-caption">
-                            <h4>Voting Intention by Political Party to Date</h4>
-                        </div>
-                        <img class="loaderImage" id="loaderImage2" src="~/Content/images/ajax-loader.gif" display="none" />
-                        <div id="chart2" class="chart trend">
-                            <svg></svg>
-
-                        </div>
-                        <div class="chart-footer" id="chart-footer2">
-                            Data last updated: <span id="pageUpdatedOn2" data-livestamp=""></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="container">
-                        <div class="chart-caption">
-                            <h4>Sentiment of Total Tweets by Political Party</h4>
-                        </div>
-                        <img class="loaderImage" id="loaderImage3" src="~/Content/images/ajax-loader.gif" display="none" />
-                        <div id="chart3" class="chart">
-                            <svg></svg>
-
-                        </div>
-                        <div class="chart-footer" id="chart-footer3">
-                            Data last updated: <span id="pageUpdatedOn3" data-livestamp=""></span>
-                        </div>
-                    </div>
-                </div>
-                @*<div class="item">
-                    <div class="container">
-                        <div class="chart-caption">
-                            <h4>Change in Voting Sentiment by Political Party (dummy data)</h4>
-                        </div>
-                        <img class="loaderImage" id="loaderImage4" src="~/Content/images/ajax-loader.gif" display="none" />
-                        <div id="chart4" class="chart">
-                            <svg></svg>
-
-                        </div>
-                        <div class="chart-footer" id="chart-footer4">
-                            Data last updated: <span id="pageUpdatedOn4" data-livestamp=""></span>
-                        </div>
-                    </div>
-                </div>*@
-            </div>
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="icon-next"></span>
-            </a>
-        </div>
-    </div>
-    <div class="col-md-5">
-        <input type="hidden" id="selectedAreaId" />
-        <input type="hidden" id="selectedAreaName" />
-        <div id="map" class="map"></div>
-    </div>
-</div>
-<div class="row" id="chartFooter">   
-    <div class="col-md-12">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#section1">How does it work?</a>
-                    </h4>
-                </div>
-                <div id="section1" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p>In near real-time we are extracting, classifying and then visualising the analysis of millions of tweets. 
-                            To do this, there are three key elements which when connected allow us to complete a seamless end-to-end workflow using Microsoft 
-                            Corporation’s Azure cloud based infrastructure and technology.</p>
-                        <ol>
-                            <li>Data Provision</li>
-                            <li>Classification & Analysis</li>
-                            <li>Front-end visualisation</li>
-                        </ol>
-                        <p>1. Data Provision</p>
-                        <ul>
-                            <li>An Azure SQL Database was carefully configured to extract, transform and load Twitter conversations.</li>
-                        </ul>
-                        <p>2. Classification & Analysis</p>
-                        <ul>
-                            <li>Azure Machine Learning Studio, is used to train, build and execute the classification model that 
-                                identifies voting preference and political party for each tweet in our SQL database.</li>
-                            <li>The updated data is then written back and stored on the Azure SQL Database with the needed voting preference, 
-                                political party and location assigned.</li>
-                        </ul>
-                        <p>3.Front-end visualisation</p>
-                        <ul>
-                            <li>Customer webpage is created using graphing charts from publically available libraries</li>
-                            <li>A web-service API calls the necessary aggregated data</li>
-                            <li>The data is updated twice daily in order to reduce data processing costs</li>
-                        </ul>
-                        <p>For more information on the specific of our methodology please email</p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#section2">Frequently asked questions</a>
-                    </h4>
-                </div>
-                <div id="section2" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <h3>Why county and not constituency mapping?</h3>
-                        <p>Due to the nuisances of Twitter usage, it is very difficult to map the General Election 2015 analysis to constituency level. 
-                            Twitter users tend to not say exactly where they live or indeed our registered to vote. This is especially true in large cities such as 
-                            London and Birmingham</p>
-                        <p>For the given constituencies that our housed within a relevant county, a county level view provides enough granularity to show how political parties 
-                            fair in popularity and how this popularity may be reflected or influence the result of the General Election 2015</p>
-
-                        <h3>What does voting intention mean?</h3>
-                        <p>Shows Twitters users positive voting intention for a given political party. Thereby, suggesting Twitter users’ voting preferences by political party.</p>
-
-                        <h3>What does sentiment of total tweets mean?</h3>
-                        <p>In at tweet, a Twitter user can communicate many positive and negative emotions and preferences towards political parties. 
-                            Voting Sentiment is showing the total number of positive and negative tweets for each political party.</p>
-
-                        <h3>Is Twitter representative of the UK population?</h3>
-                        <p>No, Twitter is not. Some key voter demographic groups are under or over represented on Twitter. However, Twitter is a key media channel 
-                            for political parties - just look at the effort of political parties to reach out to voters through this medium of interaction.</p>
-
-                        <h3>What is machine learning?</h3>
-                        <p>Machine learning is a key part of artificial intelligence which enables human insights and computers (machines) to do things such as play 
-                            games and solve complex statistical-computation problems. Machine learning is normally used to solve very specific types of real world problems 
-                            that can’t be solved using traditional Data Analysis or Business Intelligence. These problems can be broadly divided into three categories: 
-                            Forecasting, Classification & Optimization. In this instance, we used machine learning to help train our model which classifies a 
-                            Twitter user’s individual preferences towards the political parties.</p>
-
-                        <h3>Predictive analytics is all the rage, why did you not predict General Election 2015</h3>
-                        <p>The Data Science Practice are experts in implementing predictive analytics for commercial advantage. However, 
-                            we also know we have to take things step by step. Accurately predicting the outcome of each of 650 constituencies for a General Election 
-                            using Twitter is not an easy task. Especially so, with the location mapping nuisances referenced above – in 2019 perhaps!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#section3">About Altius</a>
-                    </h4>
-                </div>
-                <div id="section3" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <h2>About Altius</h2>
-                        <p>We are a highly focused management consultancy firm who specialise in helping our clients achieve commercial advantage through the use of data. 
-                            We enable our clients to better understand their customers, prospects & suppliers, model their behaviour and then predict this.</p>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h3><a href="http://altius.co.uk/strategy.html" target="_blank" title="Strategy">Strategy</a></h3>
-                                <p>Developing compelling business strategies that enable companies to drive performance and gain new insights from the use of information.</p>
-                            </div>
-                            <div class="col-md-4">
-                                <h3><a href="http://altius.co.uk/Data-Science.html" target="_blank" title="Data Science">Data Science</a></h3>
-                                <p>Predictive analytics solutions that use artificial intelligence solutions to uncover hidden patterns, advanced forecasting and 
-                                    process optimisation giving greater business insight.</p>
-                            </div>
-                            <div class="col-md-4">
-                                <h3><a href="http://altius.co.uk/visual-design.html" target="_blank" title="Design">Design</a></h3>
-                                <p>Ensuring that the message is clearly communicated by applying User Interface (UI) and User Experience (UX) 
-                                    design principles to transform how data is presented and visualised across devices.<p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3><a href="http://altius.co.uk/managed-services.html" target="_blank" title="Support">Support</a></h3>
-                                <p>A full managed service solution that provides business, technical and infrastructure support for our clients data infrastructure. 
-                                    Our services include cloud, hosting, application and insight services</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h3><a href="http://altius.co.uk/solutions.html" target="_blank" title="Technology">Technology</a></h3>
-                                <p>Implementing advanced technology to allow companies to convert their data to information. 
-                                    Our technology solution include Data Warehousing, Big Data and Machine learning solutions.</p>
-                            </div>
-                        </div>
-                            <h2 id="ContactUs">Contact Altius</h2>
+                    <div id="section3" class="panel-collapse collapse in">
+                        <a name="aboutAltius"></a>
+                        <div class="panel-body moreInfoMenuTextBody">
+                            <p>
+                                We are a highly focused management consultancy firm who specialise in helping our clients achieve commercial advantage through the use of data.
+                                We enable our clients to better <b>understand</b> their customers, prospects & suppliers, <b>model</b> their behaviour and then <b>predict</b> business performance to deliver improved profitability and efficiency.
+                            </p>
                             <div class="row">
-                                <div class="col-md-8">
-                                    <p>For more information about Altius or to provide feedback on the work please contact xxx.</p>
-                                    <p>You can also follow us on Twitter <a href="https://twitter.com/AltiusBI" target="_blank" title="Twitter">altiusbi</a></p>
+                                <div class="col-md-15">
+                                    <img src="~/Content/images/strategy_icon.png" class="aboutIcon" />
+                                    <p class="moreInfoMenuTitle">
+                                        <b><a href="http://altius.co.uk/strategy.html" target="_blank" title="Strategy">Strategy</a></b>
+                                    </p>
+                                    <p>Developing compelling business strategies that enable companies to drive performance and gain new insights from the use of information.</p>
                                 </div>
-                                <div class="col-md-4">
-                                    <img src="~/Content/images/Logo.png" id="logo" />
+                                <div class="col-md-15">
+                                    <img src="~/Content/images/technology_icon.png" />
+                                    <p class="moreInfoMenuTitle">
+                                        <b><a href="http://altius.co.uk/solutions.html" target="_blank" title="Technology">Technology</a></b>
+                                    </p>
+                                    <p>
+                                        Implementing advanced technology to allow companies to convert their data to information.
+                                        Our technology solution include Data Warehousing, Big Data and Machine learning solutions.
+                                    </p>
+                                </div>
+
+                                <div class="col-md-15">
+                                    <img src="~/Content/images/datascience_icon.png" class="aboutIcon" />
+                                    <p class="moreInfoMenuTitle">
+                                        <b><a href="http://altius.co.uk/Data-Science.html" target="_blank" title="Data Science">Data Science</a></b>
+                                    </p>
+                                    <p>
+                                        Predictive analytics solutions that use artificial intelligence solutions to uncover hidden patterns, advanced forecasting and
+                                        process optimisation giving greater business insight.
+                                    </p>
+                                </div>
+                                <div class="col-md-15">
+                                    <img src="~/Content/images/digitaldesign_icon.png" class="aboutIcon" />
+                                    <p class="moreInfoMenuTitle">
+                                        <b><a href="http://altius.co.uk/visual-design.html" target="_blank" title="Design">Design</a></b>
+                                    </p>
+                                    <p>
+                                        Ensuring that the message is clearly communicated by applying User Interface (UI) and User Experience (UX)
+                                        design principles to transform how data is presented and visualised across devices.
+                                    <p>
+                                </div>
+                                <div class="col-md-15">
+                                    <img src="~/Content/images/support_icon.png" class="aboutIcon" />
+                                    <p class="moreInfoMenuTitle">
+                                        <b><a href="http://altius.co.uk/managed-services.html" target="_blank" title="Support">Support</a></b>
+                                    </p>
+                                    <p>
+                                        A full managed service solution that provides business, technical and infrastructure support for our clients data infrastructure.
+                                        Our services include cloud, hosting, application and insight services.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row separate"></div>
 </div>
+<footer class="bs-docs-footer footer">
+    <div class="container">
+        <div class="col-md-3 col-xs-12 socialIcons">
+            <a href="http://altius.co.uk/" target="_blank" title="Altius"><img class="altiusIcon" src="~/Content/images/altius_icon.png" /></a>
+            <a href="http://www.linkedin.com/company/altius-consulting_2" target="_blank" title="LinkedIn"><img class="linkedinIcon" src="~/Content/images/linkedin_icon.png" alt="altius-linkedin" /></a>
+            <a href="https://twitter.com/AltiusBI" target="_blank" title="Twitter" alt="altius-twitter"><img class="twitterIcon" src="~/Content/images/twitter_icon.png" /></a>
+        </div>
+        <div class="col-md-6  col-xs-12">
+            <p class="text">
+                +44 (0)1483 418628 | <a href="mailto:info@altius.co.uk">info@altius.co.uk</a> | <a href="http://altius.co.uk/" target="_blank" title="Altius">www.altius.co.uk</a>
+            </p>
+        </div>
+        <div class="col-md-3  col-xs-12 headerAlign">
+            <p class="text">
+                &#169; Copyright 2015 Altius
+            </p>
+        </div>
+    </div>
+
+
+</footer>
 
 <script>
     // Copyright (c) 2013 Ryan Clark
@@ -330,8 +409,8 @@
     });
 
     var mapInfoBox;
-    var defaultMapFillColor = "#bdbdbd";
-    var activeMapAreaFillColor = "#ffffff";//"#800026";
+    var defaultMapFillColor = "#f0f0f0";
+    var activeMapAreaFillColor = "#636363";
 
     var selectedMapArea;
     var selectedMapAreaFillColor;
@@ -358,6 +437,9 @@
                 return defaultMapFillColor;
             }
             else {
+                if (!mapVoteColorData.data[geoshapeid]) {
+                    return defaultMapFillColor;
+                }
                 return mapVoteColorData.data[geoshapeid];
             }
         }
@@ -433,7 +515,7 @@
 
     function updateInfoBox(e) {
         var layer = e.target;
-        mapInfoBox.update(layer.feature.properties.name, false);
+        mapInfoBox.update(layer.feature.properties.name, true);
     }
 
     
@@ -459,8 +541,19 @@
 
         // create a map object and set the view to the coordinates 44,-31 with a zoom of 10
         map = L.map('map', { maxZoom: 8, minZoom: 5, zoomControl: false, attributionControl: false });
-        map.setView([55.6600933, -6.2659008], 5);   
+        map.setView([55.6600933, -5.259008], 5);   
+
         new L.control.zoom({ position: 'topright' }).addTo(map);
+
+        // Disable drag and zoom handlers.
+        //map.dragging.disable();
+        //map.touchZoom.disable();
+        //map.doubleClickZoom.disable();
+        //map.scrollWheelZoom.disable();
+
+        // Disable tap handler, if present.
+        if (map.tap) map.tap.disable();
+
 
         // create topoJson layers on the map
         var topoLayer = new L.TopoJSON();
@@ -474,7 +567,7 @@
         // add an info box to the map
         mapInfoBox = L.control({position: 'topleft'});
         mapInfoBox.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'mapInfoBox'); // create a div with a class "mapInfoBox"
+            this._div = L.DomUtil.create('div', 'mapRegionText'); // create a div with a class "mapInfoBox"
             this.update();
             return this._div;
         };
@@ -483,15 +576,18 @@
         mapInfoBox.update = function (name, showResetButton) {
 
             if (name) {
-                this._div.innerHTML = '<h4>' + name + '</h4>';
 
+                this._div.innerHTML = name;
                 if (showResetButton)
-                    this._div.innerHTML += '<br/>Reset to <button class="infoButton" onclick="resetToDefaultMap()">Great Britain</button><br/><br/>';
+                    this._div.innerHTML += '<div><button class="resetMap" onclick="resetToDefaultMap()">Reset to Great Britain</button></div>';
+                else {
+                
+                }
             }
             else {
-                this._div.innerHTML = '<h4>Great Britain</h4><br/>';
+                this._div.innerHTML = '<p>Great Britain</p>';
             }
-            this._div.innerHTML += '<br/><p style="font-text:smaller">Click on an area to explore charts</p>';
+            //this._div.innerHTML += '<br/><p style="font-text:smaller">Click on an area to explore charts</p>';
         };
 
         mapInfoBox.addTo(map);
@@ -514,7 +610,23 @@
     }
 
     function chartLoad() {
-        var customNoDataText = "No data available for " + $('#selectedAreaName').val()
+        //var customNoDataText = "No data available for " + $('#selectedAreaName').val()
+        var customNoDataText = "No data available"
+
+        //console.log($('#chart-caption' + currentChartId).find("p").html())
+
+        var newChartCaptionText = "<br />" + "(" + $('#selectedAreaName').val() + ")";
+        var indexBr = $('#chart-caption' + currentChartId).find("p").html().indexOf("<br>");
+        if (indexBr > 0) {
+            newChartCaptionText = $('#chart-caption' + currentChartId).find("p").html().substring(0, indexBr) + newChartCaptionText;
+        }
+        else {
+            newChartCaptionText = $('#chart-caption' + currentChartId).find("p").html() + newChartCaptionText;
+        }
+        
+
+        //var newChartCaptionText = $('.chart-caption' + currentChartId).find("p").text() ;
+        $('#chart-caption' + currentChartId).find("p").html(newChartCaptionText);
 
         var currentChartInfo = currentChart[currentChartId];
         chartOnPreLoad();
@@ -563,15 +675,18 @@
                     //delete any chart related objects
                     d3.select('#chart' + currentChartId).selectAll("*").remove()
 
+                    
+
                     //create a new "chart" with No Data text message
-                    d3.select('#chart' + currentChartId).append('svg')
-                    .append("text")
-                    .attr("x", "235")
-                    .attr("y", "35")
-                    .attr("dy", "-.7em")
-                    .attr("class", "nvd3 nv-noData")
-                    .style("text-anchor", "middle")
-                    .text(customNoDataText);
+                    var svg = d3.select('#chart' + currentChartId).append('svg');
+                    
+                    svg.append("text")
+                        .attr("x", parseInt(svg.style("width")) / 2)
+                        .attr("y", "35")
+                        .attr("dy", "-.7em")
+                        .attr("class", "nvd3 nv-noData")
+                        .style("text-anchor", "middle")
+                        .text(customNoDataText);
                 }
 
                 chartOnAfterLoad()
@@ -584,35 +699,75 @@
 
 
     function drawMultiBarChart(chartData, currentChartInfo) {
+
         var formatter = d3.format(",d"),
             dataFormat = ",.f";
 
+        //console.log(chartData)
+
         nv.addGraph(function () {
+
+            var width = 400, height = 440;
+
+            var mq = window.matchMedia('(min-width: 400px)');
+            if (mq.matches) {
+                // window width is at least 500px
+                //console.log("window width is at least 400px")
+            }
+            else {
+                // window width is less than 500px
+                //console.log("window width is less than 400px")
+                width = 300;
+                height = 350;
+            }
+
             var chart = nv.models.multiBarHorizontalChart()
+                .margin({ top: 30, right: 1, bottom: 50, left: 100 })
+                .width(width)
+                .height(height)
                 .x(function (d) { return d[0] })
                 .y(function (d) { return d[1] })
                 .valueFormat(function (d) { return formatter(d) })
                 //.margin({ top: 30, right: 20, bottom: 50, left: 175 })
                 .showValues(true)           //Show bar value next to each bar.
+                .showYAxis(true)
                 .tooltips(false)             //Show tooltips on hover.
                 .showControls(false);        //Allow user to switch between "Grouped" and "Stacked" mode.
 
+
             chart.xAxis
                 .axisLabel(currentChartInfo.xaxis)
+                //.tickFormat(function (d) { console.log(d); return d; });
+
+            chart.xAxis.tickValues(chartData.labels);
 
             chart.yAxis
                 .axisLabel(currentChartInfo.yaxis)
                 .tickFormat(d3.format(',d'));
                 //.tickFormat(function (d) { return formatter(d); })
 
+            //chart.color(['#FF0000', '#0026FF'])
+
+
             d3.select('#chart' + currentChartId + ' svg')
                 .datum(chartData[0].values)
                 .transition().duration(500)
                 .call(chart);
 
+            d3.select(".nv-x").select(".nv-axislabel")
+                .attr("dx", -180)
+                .attr("dy", -40)
+
+            d3.select(".nv-y").select(".nv-axislabel")
+                .attr("dx", 150)
+                
+
+
+           
             nv.utils.windowResize(chart.update);
 
             return chart;
+
         });
     };
 
@@ -628,7 +783,28 @@
             dataFormat = "%";
         }
 
+
         nv.addGraph(function () {
+
+            var width = 420, height = 440;
+
+            var mq = window.matchMedia('(min-width: 400px)');
+            if (mq.matches) {
+                // window width is at least 500px
+                //console.log("window width is at least 400px")
+            }
+            else {
+                // window width is less than 500px
+                //console.log("window width is less than 400px")
+                width = 300;
+                height = 350;
+            }
+
+
+            if (!mq.matches) {
+                
+            }
+
             generate:
                 var chart = nv.models.discreteBarChart()
                     .x(function (d) { return d.label })
@@ -636,7 +812,9 @@
                     .valueFormat(function (d) { return formatter(d) })
                     .staggerLabels(true)
                     .showValues(true)
-                    .tooltips(false);
+                    .tooltips(false)
+                    .width(width)
+                    .height(height);
 
             chart.color(function (d) { return d.color });
 
@@ -659,7 +837,7 @@
                 var maxTickValueCount = 5;
                 var tickVal = 0;
                 for (tickValCount = 0; tickValCount < maxTickValueCount; tickValCount++) {
-                    tickVal += maxTickValue / maxTickValueCount;
+                    tickVal += Math.floor(maxTickValue/maxTickValueCount);
                     tmpTicks[0].push(tickVal);
                 }
 
@@ -688,6 +866,21 @@
 
     function drawLineChart(chartData, currentChartInfo) {
         nv.addGraph(function () {
+
+            var width = 420, height = 440;
+
+            var mq = window.matchMedia('(min-width: 400px)');
+            if (mq.matches) {
+                // window width is at least 500px
+                //console.log("window width is at least 400px")
+            }
+            else {
+                // window width is less than 500px
+                //console.log("window width is less than 400px")
+                width = 300;
+                height = 350;
+            }
+
             generate:
                 var chart = nv.models.lineChart()
                     .x(function (d) { return d[0] })
@@ -695,7 +888,9 @@
                     .options({
                         transitionDuration: 300,
                         useInteractiveGuideline: true
-                    });
+                    })
+                    .width(width)
+                    .height(height);
 
             var tmpTickDates = chartData[0].values.map(function (e) { return e.values.map(function (d) { return d[0]; }); });
 
@@ -734,21 +929,6 @@
             return chart;
         })
     };
-
-    //function drawD3SwingChartObject(chartData) {
-    //    generate:
-    //        nv.addGraph(function () {
-    //            chart = nv.models.parallelCoordinates()
-    //                .dimensions(["Original Net Voting Sentiment", "To Date Net Voting Sentiment"]);
-    //            // make all lines the same color like this
-    //            //chart.color(['steelblue']);
-    //            d3.select('#chart' + currentChartId + ' svg')
-    //                    .datum(chartData)
-    //                    .call(chart);
-    //            nv.utils.windowResize(chart.update);
-    //            return chart;
-    //        })
-    //}
 
     function prepareNetVotePercentData(data) {
         updateLivestamp(data.lastUpdated)
@@ -842,49 +1022,26 @@
             return null;
         }
         
-        dataValues = data.data;
+        var dataValues = data.data;
 
-        //minValue = dataValues[0].values[0][1]
-        //maxValue = dataValues[0].values[0][1]
+        var labelValues = []
+        for (var i in dataValues[0].values) {
+            labelValues.push(dataValues[0].values[i][0]);
+        }
 
-        //console.log(dataValues)
+        var colors = []
+        for (var i in dataValues)
+        {
+            colors.push(dataValues[i].color);
+        }
+        //console.log(colors);
 
-        //for (i in dataValues) {
-        //    var seriesValues = dataValues[i]
-        //    for (j in seriesValues.values) {
-        //        if (seriesValues.values[j][1] > maxValue) {
-        //            maxValue = seriesValues.values[j][1]
-        //        }
-        //        if (minValue > seriesValues.values[j][1]) {
-        //            minValue = seriesValues.values[j][1]
-        //        }
-        //    }
-        //}
         return [{
             values: dataValues,
             key: "MultiBarChart",
-            minValue: 0,//minValue,
-            maxValue: 0//maxValue
+            labels: labelValues,
+            color: colors
         }];
     };
-
-    //function SwingChartData(data) {
-        //for (var key in data) {
-        //    if (data.hasOwnProperty(key)) {
-        //        updateLivestamp(key)
-        //        dataValues = data[key];
-        //    }
-        //    break;
-        //}
-
-        //var vals = [];
-        //for (var i in dataValues) {
-        //    vals.push({ label: dataValues[i].name, value: dataValues[i].count });
-        //}
-        //return [{
-        //    values: vals,
-        //    key: "SwingChart"
-        //}];
-    //}
 
 </script>

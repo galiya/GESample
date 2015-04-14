@@ -27,17 +27,24 @@ namespace GETweetsWeb.Controllers
             var netVote = repository.GetNetVoteByLocation(id);
             var lastUpdated = repository.GetNetVoteTimestamp();
 
-            if (netVote.Count() == 0)
+            if (netVote == null || netVote.Count() == 0)
             {
                 return new NetVoteData() { LastUpdated = lastUpdated, Data = null };
             }
 
+            
+
             var data = new List<NetVoteModel>();
-            var dataGroup = from t in netVote group t by t.Party into g orderby g.Key select new { party = g.Key, count = g.Sum(x => x.PositiveCount)};
+            var dataGroup = from t in netVote where t.PositiveCount > 0 group t by t.Party into g orderby g.Key select new { party = g.Key, count = g.Sum(x => x.PositiveCount)};
             foreach (var item in dataGroup)
             {
                 var party = PoliticalParty.GetList().Where(p => p.Code.ToLower() == item.party.ToLower()).FirstOrDefault();
                 data.Add(new NetVoteModel() {Name = party.Name, Count = item.count.Value, Color = party.Color, Order = party.Order });
+            }
+
+            if (data.Count() == 0)
+            {
+                return new NetVoteData() { LastUpdated = lastUpdated, Data = null };
             }
             return new NetVoteData() { LastUpdated = lastUpdated, Data = data.OrderBy(d => d.Order).ToList() };
         }
