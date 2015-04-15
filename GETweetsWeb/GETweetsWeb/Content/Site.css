@@ -103,6 +103,12 @@ body{
         height:68px;
         background-position:right;
     }
+
+    .partnerLogo {
+        width: 124px;
+        height:50px;
+
+    }
 }
 
 @media (max-width: 400px) {
@@ -216,12 +222,12 @@ body{
 
     .separate {
         /*height: 100px;*/
-        height: 70px;
+        height: 40px;
     }
 
     .separateLarge{
         /*height: 130px;*/
-        height: 90px;
+        height: 60px;
     }
 
     .mapColumn, .chartColumn {
@@ -290,8 +296,8 @@ body{
 
 .leftColumn {
     font-family: arial;
-    font-size: 1.6em;
-    line-height: 2em;
+    font-size: 1.5em;
+    line-height: 1.9em;
     color: #00cafb;
     /*border-top: 1px solid #acacac;*/
     border-bottom: 1px solid #acacac;
@@ -524,6 +530,6 @@ p.moreInfoMenuTitle a {
     color: #505150;
 }
 
-
+.nvtooltip { margin-left:-70px; }
 
 

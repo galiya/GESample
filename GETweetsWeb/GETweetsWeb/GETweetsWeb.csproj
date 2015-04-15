@@ -185,6 +185,7 @@
     <Content Include="Content\images\ge2015_logo.png" />
     <Content Include="Content\images\ge2015_site_altius_logo.png" />
     <Content Include="Content\images\linkedin_icon.png" />
+    <Content Include="Content\images\microsoft_partner_logo.png" />
     <Content Include="Content\images\strategy_icon.png" />
     <Content Include="Content\images\support_icon.png" />
     <Content Include="Content\images\technology_icon.png" />

@@ -2,7 +2,7 @@
 @section scripts
 {
     @*<script type="text/javascript"  src="~/Scripts/jquery-1.10.2.js"></script>*@
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+    @*<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>*@  
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     
@@ -44,21 +44,24 @@
         <div class="col-md-5 col-xs-12">
             <p class="leftColumn">#GE2015</p>
             <p class="leftColumn">
-                The <b>General Election 2015</b> Twitter tracker, highlights the near real-time voting preferences of Great Britain’s Twitter users.
+                The <b>General Election 2015</b> Twitter Tracker, highlights which party Great Britain’s Twitter users will vote for on <b>Thursday 07 May 2015</b>
             </p>
             <img class="leftColumnImg" src="~/Content/images/ge2015_candidate_image.png" />
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-6 col-xs-12">
             <p class="rightColumn">
-                As we speak, millions of political conversations about The <b>General Election 2015</b> are happening on Twitter. Many of these messages
-                are offering influence and speculation on the outcome of Election Day on <b>Thursday 07 May 2015</b>. This raises two interesting questions - can voting
-                preferences on Twitter help us better track and understand Great Britain's offline political preferences, and also, what is the importance of
-                Twitter as a medium for political influence?
+                There are millions of political conversations about The <b>General Election 2015</b> on Twitter. Many of these messages are offering 
+                influence and speculation on the outcome of election day – a truly social election.
             </p>
             <p class="rightColumn">
-                To help answer these questions and demonstrate the importance of Great Britain’s Twitter conversations, Altius have created a data driven and
-                machine-learnt solution. Across the UK and at a given County level you can interact and track how popular a political party is on Twitter.
+                Explore how this influence and speculation translates in to Twitter users’ voting preferences by county and across Great Britain.
+            </p>
+            <p class="rightColumn">
+                <b>Please note:</b><br/>
+                Twitter volumes may appear low. This is because we filter out tweets where a Twitter user’s location in Great Britain cannot be verified. <br/>
+                Data is loaded from 01 April 2015 to date.<br />
+                The graphics are updated every hour.
             </p>
             <p class="rightColumn">
                 For more information on Altius and to find out how we created this solution please
@@ -91,7 +94,7 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             <div class="container">
-                                <div id="chart-caption0" class="chart-caption"><p>Voting Intention by Political Party</p></div>
+                                <div id="chart-caption0" class="chart-caption"><p>Number of Votes by Political Party</p></div>
                                 <img class="loaderImage" id="loaderImage0" src="~/Content/images/ajax-loader.gif" display="none" />
                                 <div id="chart0" class="chart">
                                     <svg></svg>
@@ -101,14 +104,14 @@
                                         Data time period: 10/04/15 - present day
                                     </div>
                                     <div class="chart-footer-right">
-                                        Data last updated: <span id="pageUpdatedOn0" data-livestamp=""></span>
+                                        @*Data last updated: <span id="pageUpdatedOn0" data-livestamp=""></span>*@
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="container">
-                                <div id="chart-caption1" class="chart-caption"><p>Percentage of Total Voting Intention by Political Party (%)</p></div>
+                                <div id="chart-caption1" class="chart-caption"><p>Percentage of Total Votes by Political Party (%)</p></div>
                                 <img class="loaderImage" id="loaderImage1" src="~/Content/images/ajax-loader.gif" display="none" />
                                 <div id="chart1" class="chart">
                                     <svg></svg>
@@ -118,14 +121,14 @@
                                         Data time period: 10/04/15 - present day
                                     </div>
                                     <div class="chart-footer-right">
-                                        Data last updated: <span id="pageUpdatedOn1" data-livestamp=""></span>
+                                        @*Data last updated: <span id="pageUpdatedOn1" data-livestamp=""></span>*@
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="container">
-                                <div id="chart-caption2" class="chart-caption"><p>Voting Intention by Political Party to Date</p></div>
+                                <div id="chart-caption2" class="chart-caption"><p>Votes by Political Party to Date </p></div>
                                 <img class="loaderImage" id="loaderImage2" src="~/Content/images/ajax-loader.gif" display="none" />
                                 <div id="chart2" class="chart trend">
                                     <svg></svg>
@@ -135,14 +138,14 @@
                                         Data time period: 10/04/15 - present day
                                     </div>
                                     <div class="chart-footer-right">
-                                        Data last updated: <span id="pageUpdatedOn2" data-livestamp=""></span>
+                                        @*Data last updated: <span id="pageUpdatedOn2" data-livestamp=""></span>*@
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="item">
                             <div class="container">
-                                <div id="chart-caption3" class="chart-caption"><p>Sentiment of Total Tweets by Political Party</p></div>
+                                <div id="chart-caption3" class="chart-caption"><p>Sentiment of All Tweets by Political Party</p></div>
                                 <img class="loaderImage" id="loaderImage3" src="~/Content/images/ajax-loader.gif" display="none" />
                                 <div id="chart3" class="chart multibar">
                                     <svg></svg>
@@ -152,7 +155,7 @@
                                         Data time period: 10/04/15 - present day
                                     </div>
                                     <div class="chart-footer-right">
-                                        Data last updated: <span id="pageUpdatedOn3" data-livestamp=""></span>
+                                        @*Data last updated: <span id="pageUpdatedOn3" data-livestamp=""></span>*@
                                     </div>
                                 </div>
                             </div>
@@ -181,9 +184,7 @@
                     <div id="section1" class="panel-collapse collapse">
                         <div class="panel-body moreInfoMenuTextBody">
                             <p>
-                                In near real-time we are extracting, classifying and then visualising the analysis of millions of tweets.
-                                To do this, there are three key elements which when connected allow us to complete a seamless end-to-end workflow using Microsoft
-                                Corporation’s Azure cloud based infrastructure and technology.
+                                In near real-time we are extracting, classifying and then visualising the analysis of millions of tweets. There are three key elements which when connected, allow us to complete a seamless end-to-end workflow using Microsoft Corporation’s Azure cloud based infrastructure and technology.
                             </p>
                             @*<ol>
                                 <li>Data Provision</li>
@@ -191,15 +192,13 @@
                                 <li>Front-end visualisation</li>
                             </ol>*@
                             <p class="moreInfoMenuTextHeader">Data Provision</p>
-                            <p> Azure SQL Database was carefully configured to extract, transform and load Twitter conversations.</p>
+                            <p> An Azure SQL Database was carefully configured to extract, transform and load Twitter conversations. Tweets are assigned location information and tweets without verified locations are not passed to the Classification & Analysis stage.</p>
                             <p class="moreInfoMenuTextHeader">Classification & Analysis</p>
                             <p>
-                                Azure Machine Learning Studio, is used to train, build and execute the classification model that
-                                identifies voting preference and political party for each tweet in our SQL database. The updated data is then written back and stored on the Azure SQL 
-                                Database with the needed voting preference, political party and location assigned.
+                                Azure Machine Learning Studio, is used to train, build and execute the classification model that identifies what political party a Twitter user is intending to vote for. The updated data is then written back and stored on the Azure SQL Database with the needed voting, political party and location information all together.
                             </p>
                             <p class="moreInfoMenuTextHeader">Front-end visualisation</p>
-                            <p>Customer webpage is created using open source javascript charting libraries. Web-service APIs call the necessary aggregated data from the database. The data is updated twice daily in order to reduce data processing costs.</p>
+                            <p>A custom webpage is created using open source javascript charting libraries. Web-service APIs, call the necessary aggregated data every hour in order to reduce data processing costs.</p>
                             
                         </div>
                     </div>
@@ -214,44 +213,29 @@
                         <div class="panel-body moreInfoMenuTextBody">
                             <p class="moreInfoMenuTextHeader">Why county and not constituency mapping?</p>
                             <p>
-                                Due to the nuances of Twitter usage, it is very difficult to map the General Election 2015 analysis to constituency level.
-                                Twitter users tend to not say exactly where they live or indeed our registered to vote. This is especially true in large cities such as
-                                London and Birmingham
+                                Due to the nuances of Twitter usage, it is very difficult to map the General Election 2015 analysis to constituency level. Twitter users tend to not say exactly where they live or are registered to vote. This is especially true in large cities such as London and Birmingham.
                             </p>
                             <p>
-                                For the given constituencies that are housed within a relevant county, a county level view provides enough granularity to show how political parties
-                                fair in popularity and how this popularity may be reflected or influence the result of the General Election 2015
+                                For the given constituencies housed within a relevant county, a county level view provides enough granularity to show how political parties fair in attracting votes and their overall popularity.
                             </p>
 
-                            <p class="moreInfoMenuTextHeader">What does voting intention mean?</p>
-                            <p>Shows Twitter users' positive voting intention for a given political party. Thereby, suggesting Twitter users’ voting preferences by political party.</p>
-
-                            <p class="moreInfoMenuTextHeader">What does sentiment of total tweets mean?</p>
-                            <p>
-                                In at tweet, a Twitter user can communicate many positive and negative emotions and preferences towards political parties.
-                                Voting Sentiment is showing the total number of positive and negative tweets for each political party.
-                            </p>
+                            <p class="moreInfoMenuTextHeader">How have we worked out votes?</p>
+                            <p>In a tweet, a Twitter user can communicate many positive and negative emotions and preferences towards political parties. Tweets which explicitly communicate a positive intention to vote for a given political party signal a Twitter users intention to vote for that political party on election day.</p>
+                            <p>The graph labelled ‘Sentiment of All Tweets by Political Party’ shows Twitter users’ positive and negative users emotions and preferences towards political parties.</p>
 
                             <p class="moreInfoMenuTextHeader">Is Twitter representative of the UK population?</p>
                             <p>
-                                No, Twitter is not. Some key voter demographic groups are under or over represented on Twitter. However, Twitter is a key media channel
-                                for political parties - just look at the effort of political parties to reach out to voters through this medium of interaction.
+                                No, Twitter is not. Some key voter demographic groups are under or over represented on Twitter. However, Twitter is a key media channel for political parties - just look at the effort of political parties to reach out to voters through this medium of interaction.
                             </p>
 
                             <p class="moreInfoMenuTextHeader">What is machine learning?</p>
                             <p>
-                                Machine learning is a key part of artificial intelligence which enables human insights and computers (machines) to do things such as play
-                                games and solve complex statistical-computation problems. Machine learning is normally used to solve very specific types of real world problems
-                                that can’t be solved using traditional Data Analysis or Business Intelligence. These problems can be broadly divided into three categories:
-                                Forecasting, Classification & Optimization. In this instance, we used machine learning to help train our model which classifies a
-                                Twitter user’s individual preferences towards the political parties.
+                                Machine learning is a key part of artificial intelligence which enables human insights and computers (machines) to do things such as play games and solve complex statistical-computation problems. Machine learning is normally used to solve very specific types of real world problems that can’t be solved using traditional Data Analysis or Business Intelligence. These problems can be broadly divided into three categories: Forecasting, Classification & Optimization. In this instance, we used machine learning to help train our model which classifies a Twitter user’s individual preferences towards the political parties.
                             </p>
 
                             <p class="moreInfoMenuTextHeader">Predictive analytics is all the rage, why did you not predict General Election 2015</p>
                             <p>
-                                The Data Science Practice are experts in implementing predictive analytics for commercial advantage. However,
-                                we also know we have to take things step by step. Accurately predicting the outcome of each of 650 constituencies for a General Election
-                                using Twitter is not an easy task. Especially so, with the location mapping nuances referenced above – in 2019 perhaps!
+                                The Data Science Practice are experts in implementing predictive analytics for commercial advantage. However, we also know we have to take things step by step. Accurately predicting the outcome of each of 650 constituencies for a General Election using Twitter is not an easy task. Especially so, with the location mapping nuances referenced above – in 2019 perhaps!
                             </p>
                         </div>
                     </div>
@@ -336,13 +320,11 @@
         </div>
         <div class="col-md-6  col-xs-12">
             <p class="text">
-                +44 (0)1483 418628 | <a href="mailto:info@altius.co.uk">info@altius.co.uk</a> | <a href="http://altius.co.uk/" target="_blank" title="Altius">www.altius.co.uk</a>
+                +44 (0)1483 418628 | <a href="mailto:info@altius.co.uk">info@altius.co.uk</a> | <a href="http://altius.co.uk/" target="_blank" title="Altius">www.altius.co.uk</a> | &#169; Copyright 2015 Altius
             </p>
         </div>
         <div class="col-md-3  col-xs-12 headerAlign">
-            <p class="text">
-                &#169; Copyright 2015 Altius
-            </p>
+            <img class="partnerLogo" src="~/Content/images/microsoft_partner_logo.png" />
         </div>
     </div>
 
@@ -372,9 +354,9 @@
     var map;
     var currentChartId = 0;
     var currentChart = {
-        0: { code: "netVote", type: "bar", api: "/api/NetVote", xaxis: "Political Party", yaxis: "Number of Tweets" },
-        1: { code: "netVotePercent", type: "bar", api: "/api/NetVotePercent", xaxis: "Political Party", yaxis: "Percentage of Voting Sentiment (%)" },
-        2: { code: "netVoteTrend", type: "trend", api: "/api/NetVoteTrend", xaxis: "Date", yaxis: "Number of Tweets" },
+        0: { code: "netVote", type: "bar", api: "/api/NetVote", xaxis: "Political Party", yaxis: "Number of Votes" },
+        1: { code: "netVotePercent", type: "bar", api: "/api/NetVotePercent", xaxis: "Political Party", yaxis: "Percentage of Votes (%)" },
+        2: { code: "netVoteTrend", type: "trend", api: "/api/NetVoteTrend", xaxis: "Date", yaxis: "Number of Votes" },
         3: { code: "sentiment", type: "multibar", api: "/api/SentimentVote", xaxis: "Political Party", yaxis: "Number of Tweets" }
         //4: { code: "swing", type: "swing", api: "/api/Swing" }
     };
@@ -401,7 +383,7 @@
 
     // update chart timestamp
     function updateLivestamp(lastUpdated) {
-        jQuery('#pageUpdatedOn'+currentChartId).livestamp(lastUpdated);
+        //jQuery('#pageUpdatedOn'+currentChartId).livestamp(lastUpdated);
     }
 
     $(function () {
@@ -867,7 +849,9 @@
     function drawLineChart(chartData, currentChartInfo) {
         nv.addGraph(function () {
 
-            var width = 420, height = 440;
+            //var width = 420, height = 440;
+            var width = 380, height = 440;
+
 
             var mq = window.matchMedia('(min-width: 400px)');
             if (mq.matches) {
@@ -901,7 +885,7 @@
                 .rotateLabels(-45)
                 .axisLabel(currentChartInfo.xaxis);
 
-
+            
             var tmpTicks = [[]];
             var valueRange = chartData[0].maxValue - chartData[0].minValue;
 
