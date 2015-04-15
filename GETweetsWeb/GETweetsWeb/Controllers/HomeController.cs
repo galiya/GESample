@@ -9,11 +9,19 @@ namespace GETweetsWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private Repository repository = new Repository();
 
         public ActionResult Index()
         {
             return View("Index");
+        }
+
+        public ActionResult TestMap()
+        {
+            return View("TestMap");
+        }
+        public ActionResult TestMap1()
+        {
+            return View("TestMap1");
         }
     }
 }

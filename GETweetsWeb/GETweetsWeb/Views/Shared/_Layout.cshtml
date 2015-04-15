@@ -1,27 +1,70 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Election 2015 Twitter Tracker</title>
     <meta name="title" content="General Election 2015 Twitter Tracker" />
     <meta name="keywords" content="general election 2015, May 2015, UK general election 2015, GE2015 Twitter Tracker" />
     <meta name="description" content="Altius have created a machine-learnt solution for the General Election 2015 using Twitter Tracker, highlighting the voting preferences of Great Britain&#39;s Twitter users." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta charset="utf-8" />
 
+    @*<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>*@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
     
-    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/bootstrap")
 
+    <!--
+    If IE8 or below then d3 will not work.
+    Using the meta tag <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"> to attempt to use Google Chrome Frame if installed.
+    If not then if IE8 or below prompt to install Chrome Frame add-on (IE9 and above will run d3 fine).
+    -->
+    <!--[if lte IE 8]>
+    <script>
+      if (navigator.userAgent.indexOf("x64") != -1)
+      {
+        document.body.style.margin = 30;
+        document.write('<h1>Page not available in this browser :-(</h1><p>Unfortunately this page requires IE9 or above to display.</p><p>You can view this page correctly in Google Chrome, Firefox, Opera, Safari or any other standards compliant browser.</p><p>An alternative is to use the Google Chrome Frame Add-On but this only works with the 32-bit version of Internet Explorer and you are currently using a 64-bit version.</p>');
+      }
+      else
+      {
+        alert('Unfortunately this page requires IE9 or above to display.\n\nYou can view this page correctly in Google Chrome, Firefox, Opera, Safari or any other standards compliant browser.\n\nAlternatively you can install the Google Chrome Frame Add-On into your current version of Internet Explorer (32-bit only) by following these steps...');
+      }
+    </script>
+    <script type="text/javascript"
+       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+
+    <style>
+      .chromeFrameInstallDefaultStyle {
+        width: 100%; /* default is 800px */
+        border: 5px solid blue;
+      }
+    </style>
+
+    <div id="prompt"></div>
+
+    <script>
+      if (navigator.userAgent.indexOf("x64") == -1)
+      {
+        window.attachEvent("onload", function() {
+          CFInstall.check({
+            mode: "inline", // the default
+            node: "prompt"
+          });
+        });
+      }
+    </script>
+    <![endif]-->
+
+
 </head>
 <body>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5214c43b2fd30ead" async="async"></script>
-    @*<div class="container body-content">*@
     @RenderBody()
-    @*</div>*@
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5214c43b2fd30ead" async="async"></script>
 </body>
 </html>

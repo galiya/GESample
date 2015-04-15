@@ -1,0 +1,115 @@
+﻿
+    <title>Leaflet Layers Control Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.13/themes/css/cartodb.css" />
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.13/cartodb.js"></script>
+<style>
+        #map {
+            width: 800px;
+            height: 500px;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+
+            .info h4 {
+                margin: 0 0 5px;
+                color: #777;
+            }
+
+        .legend {
+            text-align: left;
+            line-height: 18px;
+            color: #555;
+        }
+
+            .legend i {
+                width: 18px;
+                height: 18px;
+                float: left;
+                margin-right: 8px;
+                opacity: 0.7;
+            }
+    </style>
+
+    <div class="leaflet-container leaflet-touch leaflet-fade-anim" id="map" style="position: relative;"></div>
+ 
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+<script>
+    // get the viz.json url from the CartoDB Editor
+    // - click on visualize
+    // - create new visualization
+    // - make visualization public
+    // - click on publish
+    // - go to API tab
+
+    cartodb.createVis('map', 'http://documentation.cartodb.com/api/v2/viz/2b13c956-e7c1-11e2-806b-5404a6a683d5/viz.json')
+      .done(function (vis, layers) {
+          // layer 0 is the base layer, layer 1 is cartodb layer
+          // when setInteraction is disabled featureOver is triggered
+          layers[1].setInteraction(true);
+          layers[1].on('featureClick', function (e, latlng, pos, data, layerNumber) {
+              console.log(e, latlng, pos, data, layerNumber);
+          });
+
+          // you can get the native map to work with it
+          var map = vis.getNativeMap();
+
+      });
+</script>
+
+    @*<script type="text/javascript">
+
+        //var map = L.map('map');
+        //map.setView([55.6600933, -5.259008], 1);
+
+		//L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+		//	maxZoom: 18,
+			
+		//	id: 'examples.map-20v6611k'
+		//}).addTo(map);
+
+
+		
+
+		function style(feature) {
+
+		    console.log(feature.properties.name);
+
+			return {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: "#FF00FF"
+			};
+		}
+
+		var url = 'https://galiya.cartodb.com/api/v2/viz/b7d1c1ee-e2f2-11e4-9201-0e9d821ea90d/viz.json';
+
+		cartodb.createVis('map', url)
+          .done(function (vis, layers) {
+              console.log(1)
+              console.log(layers[0]);
+              layers[1].setInteraction(true);
+
+              layers[1].on('featureClick', function (e, pos, latlng, data) {
+                  console.log(data)
+              });
+          });
+
+	
+		
+
+    </script>*@
+

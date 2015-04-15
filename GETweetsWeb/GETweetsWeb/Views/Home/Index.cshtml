@@ -18,6 +18,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+<link rel="stylesheet" href="~/Scripts/cartodb/cartodb.css" />
+<script src="~/Scripts/cartodb/cartodb.js"></script>
 }
 
 <div class="bs-docs-header headerDiv" id="content" tabindex="-1">
@@ -366,7 +369,40 @@
       }
     });
 </script>
+<script>
+    /**
+ * detect IE
+ * returns version of IE or false, if browser is not Internet Explorer
+ */
+    function detectIE() {
+        var ua = window.navigator.userAgent;
 
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+            // IE 10 or older => return version number
+            //console.log(parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10));
+            return true;
+        }
+
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+            // IE 11 => return version number
+            var rv = ua.indexOf('rv:');
+            //console.log(parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10));
+            return true;
+        }
+
+        var edge = ua.indexOf('Edge/');
+        if (edge > 0) {
+            // IE 12 => return version number
+            //console.log(parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10));
+            return true;
+        }
+
+        // other browser
+        return false;
+    }
+</script>
 <script type="text/javascript">
 
     var map;
@@ -520,77 +556,105 @@
 
     
     function mapLoad() {
-       
-        $.ajax({
-            type: "GET",
-            url: "/api/MapVote",
-            cache: false,
-            dataType: 'json',
-            success: function (data) {
-                // given the data update each map area and change the fill color for each of the area
-                mapVoteColorData = data;
-    
-                topoLayer.eachLayer(function (layer) {
-                    handleLayer(layer);
-                });
-            },
-            error: function (response) {
-                //$('#loaderImage' + currentChartId).hide();
-            }
-        });
 
-        // create a map object and set the view to the coordinates 44,-31 with a zoom of 10
         map = L.map('map', { maxZoom: 8, minZoom: 5, zoomControl: false, attributionControl: false });
-        map.setView([55.6600933, -5.259008], 5);   
+        map.setView([55.6600933, -5.259008], 5);
 
-        new L.control.zoom({ position: 'topright' }).addTo(map);
-
-        // Disable drag and zoom handlers.
-        //map.dragging.disable();
-        //map.touchZoom.disable();
-        //map.doubleClickZoom.disable();
-        //map.scrollWheelZoom.disable();
-
-        // Disable tap handler, if present.
-        if (map.tap) map.tap.disable();
+        if (detectIE()) {
+        console.log("handle IE");
 
 
-        // create topoJson layers on the map
-        var topoLayer = new L.TopoJSON();
-        $.getJSON('/Content/map.topo.json').done(addTopoData);
-        function addTopoData(topoData) {
-            topoLayer.addData(topoData);
-            topoLayer.addTo(map);
-            topoLayer.eachLayer(handleLayer);
+        var url = 'https://galiya.cartodb.com/api/v2/viz/b7d1c1ee-e2f2-11e4-9201-0e9d821ea90d/viz.json';
+
+        cartodb.createVis('map', url)
+            .done(function (vis, layers) {
+                console.log(1);
+                layers[1].setInteraction(true);
+
+                layers[1].on('featureClick', function (e, pos, latlng, data) {
+                    console.log(2);
+                    console.log(data)
+                });
+            });
+
+        
+
+
         }
 
-        // add an info box to the map
-        mapInfoBox = L.control({position: 'topleft'});
-        mapInfoBox.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'mapRegionText'); // create a div with a class "mapInfoBox"
-            this.update();
-            return this._div;
-        };
+        else {
 
-        // method that we will use to update the control based on feature properties passed
-        mapInfoBox.update = function (name, showResetButton) {
-
-            if (name) {
-
-                this._div.innerHTML = name;
-                if (showResetButton)
-                    this._div.innerHTML += '<div><button class="resetMap" onclick="resetToDefaultMap()">Reset to Great Britain</button></div>';
-                else {
-                
+            $.ajax({
+                type: "GET",
+                url: "/api/MapVote",
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    // given the data update each map area and change the fill color for each of the area
+                    mapVoteColorData = data;
+    
+                    topoLayer.eachLayer(function (layer) {
+                        handleLayer(layer);
+                    });
+                },
+                error: function (response) {
+                    //$('#loaderImage' + currentChartId).hide();
                 }
-            }
-            else {
-                this._div.innerHTML = '<p>Great Britain</p>';
-            }
-            //this._div.innerHTML += '<br/><p style="font-text:smaller">Click on an area to explore charts</p>';
-        };
+            });
 
-        mapInfoBox.addTo(map);
+            // create a map object and set the view to the coordinates 44,-31 with a zoom of 10
+           // map = L.map('map', { maxZoom: 8, minZoom: 5, zoomControl: false, attributionControl: false });
+           // map.setView([55.6600933, -5.259008], 5);   
+
+            new L.control.zoom({ position: 'topright' }).addTo(map);
+
+            // Disable drag and zoom handlers.
+            //map.dragging.disable();
+            //map.touchZoom.disable();
+            //map.doubleClickZoom.disable();
+            //map.scrollWheelZoom.disable();
+
+            // Disable tap handler, if present.
+            if (map.tap) map.tap.disable();
+
+
+            // create topoJson layers on the map
+            var topoLayer = new L.TopoJSON();
+            $.getJSON('/Content/map.topo.json').done(addTopoData);
+            function addTopoData(topoData) {
+                topoLayer.addData(topoData);
+                topoLayer.addTo(map);
+                topoLayer.eachLayer(handleLayer);
+            }
+
+            // add an info box to the map
+            mapInfoBox = L.control({position: 'topleft'});
+            mapInfoBox.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'mapRegionText'); // create a div with a class "mapInfoBox"
+                this.update();
+                return this._div;
+            };
+
+            // method that we will use to update the control based on feature properties passed
+            mapInfoBox.update = function (name, showResetButton) {
+
+                if (name) {
+
+                    this._div.innerHTML = name;
+                    if (showResetButton)
+                        this._div.innerHTML += '<div><button class="resetMap" onclick="resetToDefaultMap()">Reset to Great Britain</button></div>';
+                    else {
+                
+                    }
+                }
+                else {
+                    this._div.innerHTML = '<p>Great Britain</p>';
+                }
+                //this._div.innerHTML += '<br/><p style="font-text:smaller">Click on an area to explore charts</p>';
+            };
+
+            mapInfoBox.addTo(map);
+        }
     }
 
     function chartClean()

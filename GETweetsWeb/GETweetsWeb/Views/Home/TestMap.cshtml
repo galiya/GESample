@@ -1,0 +1,260 @@
+﻿@*@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" />
+    <![endif]-->
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    @*<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+    
+    <link rel="stylesheet" href="~/Scripts/cartodb/cartodb.css" />
+    <script src="~/Scripts/cartodb/cartodb.js"></script>
+
+    <link href="~/Content/nv.d3.min.css" rel="stylesheet">
+    <script src="~/Scripts/nv.d3.min.js"></script>
+
+<script type="text/javascript" src="~/Content/map.js"></script>
+<script type="text/javascript" src="~/Content/statesData.js"></script>
+
+    <style>
+        #map { height: 180px; }
+        #chart svg {height: 400px;}
+    </style>
+<div id="map"></div>
+<div id="chart">
+    <svg></svg>
+</div>
+
+<script>
+    // Copyright (c) 2013 Ryan Clark
+    // https://gist.github.com/rclark/5779673
+    L.TopoJSON = L.GeoJSON.extend({
+        addData: function (jsonData) {
+            if (jsonData.type === "Topology") {
+                //console.log("geojson - topology");
+                for (key in jsonData.objects) {
+
+                    //console.log("geojson - adding features");
+
+                    geojson = topojson.feature(jsonData, jsonData.objects[key]);
+                    L.GeoJSON.prototype.addData.call(this, geojson);
+                }
+            }
+            else {
+
+                //console.log("geojson - not topology");
+                L.GeoJSON.prototype.addData.call(this, jsonData);
+            }
+        }
+    });
+</script>
+<script>
+    /**
+ * detect IE
+ * returns version of IE or false, if browser is not Internet Explorer
+ */
+    function detectIE() {
+        var ua = window.navigator.userAgent;
+
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+            // IE 10 or older => return version number
+            //console.log(parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10));
+            return true;
+        }
+
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+            // IE 11 => return version number
+            var rv = ua.indexOf('rv:');
+            //console.log(parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10));
+            return true;
+        }
+
+        var edge = ua.indexOf('Edge/');
+        if (edge > 0) {
+            // IE 12 => return version number
+            //console.log(parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10));
+            return true;
+        }
+
+        // other browser
+        return false;
+    }
+</script>
+
+    <script type="text/javascript">
+        var map = L.map('map');
+
+        function onEachFeature(feature, layer) {
+            var popupContent = '<div class="' + feature.properties.samaksa + '"><b>' + feature.properties.title + '</b><br/>' +
+                            '<p>' + feature.properties.description + '</p>' +
+                            '<img src="img/' + feature.properties.image + '"/>' +
+                            '<p><em style="font-size: 0.8em"><a href="http://sapnis.com/vietas/#14/' + feature.geometry.coordinates + '">' + feature.geometry.coordinates + '</a></em></p></div>';
+            layer.bindPopup(popupContent);
+        }
+
+
+
+       
+        
+        //console.log(1);
+        function handleLayer(layer) {
+
+
+
+            function handleLayer(layer) {
+
+                layer.setStyle({
+                    fillColor: "#00FF00",
+                    fillOpacity: 1,
+                    color: '#555',
+                    weight: 1,
+                    opacity: 0.5
+                });
+
+                // defines client events available for user
+
+                layer.addEventListener("click", selectMapArea, false);
+                //                layer.addEventListener("mouseover", updateInfoBox, false);
+                //layer.addEventListener("mouseout", resetInfoBox, false);
+            }
+        };
+
+        function selectMapArea(e)
+        {
+            console.log(e)
+        }
+
+        //if (detectIE()) {
+            //console.log("handle IE");
+
+            //var geojson = L.geoJson(mapData, {
+            //    style: function (feature) {
+            //        return {
+            //            fillColor: "#00FF00",
+            //            fillOpacity: 1,
+            //            color: '#555',
+            //            weight: 1,
+            //            opacity: 0.5
+            //        };
+            //    },
+            //    onEachFeature: onEachFeature,
+            //    pointToLayer: function (feature, latlng) {
+            //        return L.circleMarker(latlng, {
+            //            radius: 6,
+            //            fillColor: "#e1e1e1",
+            //            color: "#888",
+            //            weight: 2,
+            //            opacity: 1,
+            //            fillOpacity: 0.7
+            //        });
+            //    }
+            //}).addTo(map);
+
+
+        var url = 'https://galiya.cartodb.com/api/v2/viz/b7d1c1ee-e2f2-11e4-9201-0e9d821ea90d/viz.json';
+
+            cartodb.createVis('map', url)
+                .done(function (vis, layers) {
+                    layers[1].setInteraction(true);
+
+                    layers[1].on('featureClick', function (e, pos, latlng, data) {
+                        console.log(data)
+                    });
+
+                    layers[1].on('featureOver', function (e, pos, latlng, data) {
+                        console.log("featureOver");
+                        console.log(data);
+                    });
+                });
+           
+            
+        //}
+
+        //else {
+            
+        //    map.setView([55.6600933, -5.259008], 6);
+        //    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        //        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        //    }).addTo(map);
+
+        //    function handleLayer(layer) {
+        //        layer.setStyle({
+        //            fillColor: "#00FF00",
+        //            fillOpacity: 1,
+        //            color: '#555',
+        //            weight: 1,
+        //            opacity: 0.5
+        //        });
+
+        //    }
+
+        //    var topoLayer = new L.TopoJSON();
+        //    $.getJSON('/Content/map.topo.json').done(addTopoData);
+        //    function addTopoData(topoData) {
+        //        topoLayer.addData(topoData);
+        //        topoLayer.addTo(map);
+        //        topoLayer.eachLayer(handleLayer);
+        //    }
+        //}
+        //console.log(2);
+
+
+        //nv.addGraph(function () {
+        //    var chart = nv.models.lineChart()
+        //      .useInteractiveGuideline(true)
+        //    ;
+
+        //    chart.xAxis
+        //      .axisLabel('Time (ms)')
+        //      .tickFormat(d3.format(',r'))
+        //    ;
+
+        //    chart.yAxis
+        //      .axisLabel('Voltage (v)')
+        //      .tickFormat(d3.format('.02f'))
+        //    ;
+
+        //    d3.select('#chart svg')
+        //      .datum(data())
+        //      .transition().duration(500)
+        //      .call(chart)
+        //    ;
+
+        //    nv.utils.windowResize(chart.update);
+
+        //    return chart;
+        //});
+
+        //function data() {
+        //    var sin = [],
+        //        cos = [];
+
+        //    for (var i = 0; i < 100; i++) {
+        //        sin.push({x: i, y: Math.sin(i/10)});
+        //        cos.push({x: i, y: .5 * Math.cos(i/10)});
+        //    }
+
+        //    return [
+        //      {
+        //          values: sin,
+        //          key: 'Sine Wave',
+        //          color: '#ff7f0e'
+        //      },
+        //      {
+        //          values: cos,
+        //          key: 'Cosine Wave',
+        //          color: '#2ca02c'
+        //      }
+        //    ];
+        //}
+
+    </script>
