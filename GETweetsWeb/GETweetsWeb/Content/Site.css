@@ -24,14 +24,15 @@ body{
 /*-----*/
 .headerDiv {
     background-color: #f5f5f5;
-    height: 136px;
-    padding-top: 40px
+    height: 100px;
+    padding-top: 15px
 }
 
 @media (max-width: 1200px) {
     .leftColumnImg {
         width: 100%;
         height: 100%;
+        text-align:center;
     }
 
     .headerDiv p.Title {
@@ -69,8 +70,10 @@ body{
 
 @media (min-width: 1201px) {
     .leftColumnImg {
-        width: 480px;
-        height: 335px;
+        width: 380px;
+        height: 235px;
+        text-align:center;
+      
     }
 
     .headerDiv p.Title {
@@ -126,6 +129,7 @@ body{
 
     .chart svg {
       min-height: 320px !important;
+     
     }
 
     .chart-caption p {
@@ -213,6 +217,14 @@ body{
     
 }
 
+
+.watermarkImage{
+    width: 15% !important;
+    position: absolute;
+    right: 25px;
+    top: 10%;
+    z-index: 9999 !important;
+}
 
 @media (min-width: 640px){
 
@@ -309,7 +321,7 @@ body{
     font-size: 1.1em;
     line-height: 2em;
     color: #666666;
-    padding-bottom: 25px;
+   /* padding-bottom: 25px;*/
 }
 
 .rightColumn a{
@@ -498,6 +510,21 @@ p.moreInfoMenuTitle a {
     height: auto;
 }
 
+/*IE Only - make the map appear*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .leaflet-overlay-pane svg {
+    width: 465px !important;
+    height: 600px !important;
+}
+
+    svg {
+         width:  !important;
+        height:  !important;
+    }
+}
+
+
+
 .mapInfoBox {
     position: center;
     padding: 6px 8px;
@@ -533,3 +560,31 @@ p.moreInfoMenuTitle a {
 .nvtooltip { margin-left:-70px; }
 
 
+.chart_box {
+width:auto;
+min-height:350px;
+}
+.chart_box1 {
+width:1000px;
+min-height:500px;
+}
+
+
+.barChartLabel .nv-axislabel{
+   
+
+}
+
+.bottomLineAdj{
+    min-height: 182px;
+  
+    
+}
+
+
+
+
+.nv-axisMaxMin text {
+font-size:10px;
+color:#00cafb;
+}

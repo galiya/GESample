@@ -104,12 +104,14 @@ namespace GETweetsWeb
         {
             try
             {
+                var netVote = this.GetNetVote();
                 if (locationId.HasValue && locationId > 0)
                 {
-                    return this.GetNetVote().Where(f => f.GeoShape.GeoShapeId == locationId);
+                    return netVote.Where(f => f.GeoShapeId == locationId);
+                    //return netVote.Where(f => f.GeoShape.GeoShapeId == locationId);
                 }
                 else
-                    return this.GetNetVote();
+                    return netVote;
             }
             catch (Exception)
             {
@@ -168,7 +170,8 @@ namespace GETweetsWeb
             {
                 if (locationId.HasValue && locationId > 0)
                 {
-                    return this.GetNetVoteTrend().Where(f => f.GeoShape.GeoShapeId == locationId);
+                    //return this.GetNetVoteTrend().Where(f => f.GeoShape.GeoShapeId == locationId);
+                    return this.GetNetVoteTrend().Where(f => f.GeoShapeId == locationId);
                 }
                 else
                     return this.GetNetVoteTrend();
